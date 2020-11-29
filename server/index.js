@@ -66,7 +66,7 @@ app.post('/send', (req, res) => {
 
     Event.findOne({url:newevent.url},function(err,user){
       console.log("hi");
-        if(user) return res.status(400).json({ auth : false, message :"email exits"});
+        //if(user) return res.status(400).json({ auth : false, message :"email exits"});
   
         newevent.save((err,doc)=>{
             if(err) {console.log(err);

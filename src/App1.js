@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import axios from 'axios';
 import styled from 'styled-components';
 
+
 import NameForm from './SubmitEvent'
 
 import { Redirect } from 'react-router-dom';
@@ -13,12 +14,18 @@ import Countdown from './Countdown'
 import AuthForms from './AuthForms'
 import Signup from './Signup'
 
-
+import TasksComponent from './TasksComponent';
+import PastEventsComponent from './PastEventsComponent';
 import ReactDOM from 'react-dom';
 import { ReactComponent as Check } from './check.svg';
 
 import Header from './components/Header';
 import { SubmitForm, MyList } from './components/SubmitForm';
+
+import { Column, Row } from 'simple-flexbox';
+import { StyleSheet, css } from 'aphrodite';
+import SidebarComponent from './SidebarComponent';
+import HeaderComponent from './HeaderComponent';
 
 
 
@@ -31,6 +38,44 @@ import {
 
 
 import txt from './Output.json';
+
+
+
+const styles = StyleSheet.create({
+  container: {
+      minHeight: '100vh'
+  },
+  content: {
+      marginTop: 54
+  },
+  mainBlock: {
+      backgroundColor: '#F7F8FC',
+      padding: 30
+  },cardsContainer: {
+    marginRight: -30,
+    marginTop: -30
+},
+cardRow: {
+    marginTop: 30,
+    
+    '@media (max-width: 768px)': {
+        marginTop: 0
+    }
+},
+miniCardContainer: {
+    flexGrow: 1,
+    marginRight: 30,
+    '@media (max-width: 768px)': {
+        marginTop: 30,
+        maxWidth: 'none'
+    }
+},
+
+lastRow: {
+    marginTop: 30,
+    marginBottom: 30
+}
+});
 
 function Tick() {
   const element = (
@@ -46,7 +91,7 @@ function Tick() {
 setInterval(Tick, 1000);
 
 const Submit = ( {postedbyuser, handleChange} ) => (
-  <div className="container">
+  <div className="container-submit">
     <SubmitForm postedbyuser={postedbyuser} handleChange={handleChange}/>
     
    
@@ -192,36 +237,46 @@ const App1 = () => {
   const element = (
   
     <Router>
-    <div className="clock">
-      <Link style={{marginLeft: 0}} to="/">home</Link> |
-      <Link style={{padding: 20}} to="/submit">submit</Link> |
-      <Greeting /> 
+      <Row className={css(styles.container)}>
+      <SidebarComponent  />
+     
+      <Column flexGrow={1} className={css(styles.mainBlock)}>
       
-      <span> | Hi { postedby != "" ? postedby : "guest" } </span>  
-  
-    </div>
+                <HeaderComponent title={"home"} postedby={postedby} />
+                <div className={css(styles.content)}>
+                
+            
+   
 
     <Switch>
       <Route path="/submit">
         <Submit postedbyuser={postedby} handleChange={handleChange}/>
       </Route>
       <Route path="/login">
-        <AuthForms logout={false} handlePostedby={handlePostedby}/>
+      <div className="container-submit">
+        <AuthForms logout={false} handlePostedby={handlePostedby}/></div>
       </Route>
       <Route path="/logout">
         <Logout handlePostedby ={handlePostedby} />
       </Route>
       <Route path="/signup">
-        <Signup handlePostedby ={handlePostedby} />
+      <div className="container-submit">
+        <Signup handlePostedby ={handlePostedby} /></div>
       </Route>
       <Route path="/">
         <App eventlist={eventlist}/>
       </Route>
     </Switch>
-
-    <div>
+   
+        </div>
+        <div id="element-align">
       <i>Meetup discovery app 2020</i>
     </div>
+                </Column>
+
+    
+    <SidebarComponent  />
+    </Row>
   </Router>
   );
   return element;
@@ -360,9 +415,9 @@ const App = ({eventlist}) =>  {
 
   return (
   
-    <div className="container">
+    <div >
       <h1 className="headline-primary">
-      Upcoming online tech meets</h1>
+      </h1>
       
       
 
@@ -376,6 +431,7 @@ const App = ({eventlist}) =>  {
         <p>Loading ...</p>
       ) : (
         
+        
         <List 
           list={stories.data} 
           onRemoveItem={handleRemoveStory} 
@@ -385,7 +441,7 @@ const App = ({eventlist}) =>  {
       )}
 
 <h1 className="headline-primary">PAST MEETS</h1>
-      <List list={pastStories}/>
+      <v list={pastStories}/>
       <hr></hr>
       <SearchForm searchTerm={searchTerm}
       onSearchInput={handleSearchInput}
@@ -432,21 +488,36 @@ const InputWithLabel = ({
 
    
 
+   const PastList = ({ list, onRemoveItem }) => (
+    <Row horizontal="space-between" className={css(styles.lastRow)}
+    breakpoints={{ 1024: 'column' }}>
+    
+    <PastEventsComponent containerStyles={styles.tasks} list={list}/>
+    
+    </Row>)
 
 
 
+const List = ({ list, onRemoveItem }) => (
+  <Row horizontal="space-between" className={css(styles.lastRow)}
+  breakpoints={{ 1024: 'column' }}>
+  
+  <TasksComponent containerStyles={styles.tasks} list={list}/>
+  
+  </Row>)
+  /*list.map(item => (
+    <Item 
+     key={item.name} 
+     item={item}
+     onRemoveItem={onRemoveItem}
+    /> 
+   ));*/
 
-const List = ({ list, onRemoveItem }) => 
-  list.map(item => (
-   <Item 
-    key={item.name} 
-    item={item}
-    onRemoveItem={onRemoveItem}
-   /> 
-  ));
+
+  
 
   const Item = ({item, onRemoveItem}) => (
-
+    
     <div className="item">
     <div className="sub-item1">
     
@@ -454,7 +525,7 @@ const List = ({ list, onRemoveItem }) =>
     </div>
     <div className="sub-item2">
       start: {new Date(item.startDate).toUTCString()}
-      
+      <Countdown startDate={item.startDate}/>
     </div>
     
       

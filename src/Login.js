@@ -43,7 +43,7 @@ const AuthForms = () => {
 
   // if there's no user, show the login form
   return (
-    <form onSubmit={handleSubmit}>
+    /*<form onSubmit={handleSubmit}>
       <label htmlFor="username">Username: </label>
       <input
         type="text"
@@ -61,7 +61,40 @@ const AuthForms = () => {
         />
       </div>
       <button type="submit">Login</button>
-    </form>
+    </form>*/
+    <form onSubmit={handleSubmit}>
+    <Form.Group controlId="username">
+      <Form.Label>Username</Form.Label>
+      <Form.Control
+        type="text"
+        name="username"
+        value={username}
+        placeholder="enter a username"
+        onChange={({ target }) => setUsername(target.value)}
+      />
+    </Form.Group>
+ 
+    <Form.Group controlId="password">
+      <Form.Label>Password</Form.Label>
+      <Form.Control
+        type="password"
+        name="password"
+        value={password}
+        placeholder="Enter a password"
+        onChange={({ target }) => setPassword(target.value)}
+      />
+    </Form.Group>
+  
+       
+       
+        
+        
+   
+    <Button variant="primary" type="submit">
+      Submit
+    </Button>
+  </form>
+
   );
 };
 

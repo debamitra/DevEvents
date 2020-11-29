@@ -32,6 +32,13 @@ a:hover {
   color: #171212;
 }
 
+.container-submit {
+  margin-left: 120px;
+  margin-right: 120px;
+ 
+
+}
+
 .headline-primary {
   font-size: 24px;
   font-weight: 300;
@@ -107,4 +114,24 @@ a:hover {
 .button_large {
   padding: 10px;
 }
+
+.countdown {
+  background-color:rgba(245, 234, 234, 0.808);
+  border:1px solid #171212;
+  font-size: 14px;
+}
+
+.formsub {
+  
+  margin-bottom: 15;
+
+}
+
+#element-align {
+  position: fixed;
+  bottom: 0;
+ 
+}
+
+
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import  './App.css';
 
 
 
@@ -52,7 +53,7 @@ Object.keys(timeLeft).forEach((interval) => {
 
 return (
   <div>
-    {timerComponents.length ? timerComponents : <span>Time's up!</span>}
+    {timerComponents.length ? timerComponents : <span>event over.</span>}
  </div>  
 );
 }

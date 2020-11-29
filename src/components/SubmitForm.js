@@ -4,6 +4,9 @@ import {Form, Button} from 'react-bootstrap';
 import axios from 'axios';
 import styles from  '../App.css';
 import DateTimePicker from 'react-datetime-picker';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import  '.././submit.css';
+
 
 
 
@@ -155,6 +158,7 @@ const SubmitForm = ({postedbyuser, handleChange}) => {
           />
         </Form.Group>
         <Form.Group controlId="url">
+          <div className="formsub">
           <Form.Label>URL</Form.Label>
           <Form.Control
             type="text"
@@ -163,14 +167,16 @@ const SubmitForm = ({postedbyuser, handleChange}) => {
             placeholder="Enter the url"
             onChange={onInputChange}
           />
+          </div>
         </Form.Group>
-        <Form.Label>Start time </Form.Label>
+        <Form.Label>Start time </Form.Label><span> : </span>
             <DateTimePicker
             name="startDate"
               onChange={onInputStartTimeChange}
                 value={state.startdatetime}
             />
-            <Form.Label>End time </Form.Label>
+            <span ></span>
+            <Form.Label>End time </Form.Label> <span> : </span>
             <DateTimePicker
              name="endDate"
               onChange={onInputEndTimeChange}
@@ -180,11 +186,11 @@ const SubmitForm = ({postedbyuser, handleChange}) => {
            
            
             
-            
-       
-        <Button variant="primary" type="submit">
+          
+       <div><Button variant="primary" type="submit">
           Submit
-        </Button>
+        </Button></div>
+        
       </form>
     </div>
     
