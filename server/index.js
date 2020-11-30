@@ -182,5 +182,5 @@ app.get('/api/profile',auth,function(req,res){
 const PORT = process.env.PORT || 3030;
 
 app.listen(PORT, () => {
-  console.log('server start on port ${PORT}');
+  console.log(`Listening on ${ PORT }`);
 });
