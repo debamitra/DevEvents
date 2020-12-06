@@ -3,6 +3,7 @@ import { Row , Column} from 'simple-flexbox';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import CardComponent from './CardComponent';
 import MiniCardComponent from './MiniCardComponent';
+import Countdown from './Countdown';
 
 
 const styles = StyleSheet.create({
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Muli',
         fontStyle: 'normal',
         fontWeight: '600',
-        fontSize: 14,
+        fontSize: 18,
         letterSpacing: '0.2px',
         lineHeight: '20px'
     },
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Muli',
         fontStyle: 'normal',
         fontWeight: 'normal',
-        fontSize: 12,
+        fontSize: 14,
         lineHeight: '16px',
         letterSpacing: '0.1px',
         color: '#515467'
@@ -69,6 +70,7 @@ const TAGS = {
 }
 
 class PastEventsComponent extends React.Component {
+    
 
     state = { items: [
         {title: 'My awesome tech event', checked: false, tag: TAGS.URGENT },
@@ -76,26 +78,34 @@ class PastEventsComponent extends React.Component {
         {title: 'Jims roundup of react 17', checked: true, tag: TAGS.DEFAULT }
     ]};
 
-    renderTask = ({title, tag = {} }, index) => (
+    renderTask = ({name, url, startDate, endDate, postedby, tag = TAGS.URGENT}, index) => {
+        console.log("render task");
+        const month = new Date(startDate).getMonth();
+        return (
         <Row horizontal="space-between" vertical="center">
             
             <Row>
-                <MiniCardComponent className={css(styles.miniCardContainer)} title="Nov" value="26" />
+                <MiniCardComponent className={css(styles.miniCardContainer)} title={month} value={new Date(startDate).getDate()} day={new Date(startDate).getDay()}/>
                     
                 <Column>
-                <span className={css(styles.itemTitle)}>{title}</span>
+                <span className={css(styles.itemTitle)}><a href={url}>{name}</a></span>
                 
                 
-                <span className={css(styles.subtitle)}>online | posted by apdfgh | 12 hrs 3 mins left</span>
+                
+                
+        <span className={css(styles.subtitle)}>online | posted by {postedby}  </span>
+        <Countdown startDate={startDate}/>
                 </Column> 
                 
                
                 
             </Row>
-            
             {this.renderTag(tag, index)}
+            
+           
         </Row>
     );
+        }
 
     renderTag = ({ text, backgroundColor, color }, index) => (
         <Row horizontal="center" vertical="center"
@@ -134,18 +144,34 @@ class PastEventsComponent extends React.Component {
     )
 
     render() {
+        const {containerStyles, list } = this.props;
+        console.log("list: ",list);
+        let  newresult = [];
+        const temp = {
+            name : "ntestame",
+            url : "testurl",
+            postedby : "postedby",
+            startDate :  "startdatetime" + "",
+            endDate : "enddatetime" + ""
+          };
+          newresult.push(temp);
+        const text = newresult.concat(list);
+        console.log("text  ",text);
         return (
-            <CardComponent containerStyles={this.props.containerStyles} title="Past tech events" link="View all" subtitle="Past"
+            
+            <CardComponent containerStyles={this.props.containerStyles} title="Upcoming tech events" link="" subtitle="Recent"
                 items={[
-                    <Row horizontal="space-between" vertical="center">
+                    /*<Row horizontal="space-between" vertical="center">
                         <span className={css(styles.itemTitle, styles.greyTitle)}>add a tech event</span>
                         {this.renderAddButton()}
-                    </Row>,
-                    ...this.state.items.map(this.renderTask)
+                    </Row>,*/
+                    ...list.map(this.renderTask)
                 ]}
             />
         );
     }
 }
+
+
 
 export default PastEventsComponent;

@@ -53,7 +53,7 @@ Object.keys(timeLeft).forEach((interval) => {
 
 return (
   <div>
-    {timerComponents.length ? timerComponents : <span>event over.</span>}
+    {timerComponents.length ? <span>{timerComponents} till event starts.</span> : <span>event over.</span>}
  </div>  
 );
 }

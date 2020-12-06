@@ -6,11 +6,11 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#FFFFFF',
         border: '1px solid #DFE0EB',
-        borderRadius: 4,
+        borderRadius: 6,
         cursor: 'pointer',
         height: 50,
-        maxWidth: 30,
-        padding: '14px 22px 14px 22px',
+        maxWidth: 40,
+        padding: '14px 30px 14px 30px',
         ':hover': {
             borderColor: '#3751FF',
             ':nth-child(n) > span': {

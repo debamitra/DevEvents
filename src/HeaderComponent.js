@@ -103,16 +103,16 @@ function HeaderComponent(props) {
     return (
         <Row className={css(styles.container)} vertical="center" horizontal="space-between" {...otherProps}>
             
-            <Link style={{marginLeft: 0}} to="/">home</Link> <div className={css(styles.separator)}></div>
-            <Link style={{padding: 20}} to="/submit">submit</Link> <div className={css(styles.separator)}></div>
+            <Link style={{marginLeft: 0}} to="/">home</Link> 
+            <Link style={{padding: 20}} to="/submit">submit</Link> 
             <Row vertical="center">
-                <div className={css(styles.iconStyles)}>
+                {/*<div className={css(styles.iconStyles)}>
                     <IconSearch />
-                </div>
+    </div>*/}
                 
-                <div className={css(styles.separator)}></div>
-                <Greeting /> 
-                <div className={css(styles.separator)}></div>
+                
+                <Greeting /> <div className={css(styles.separator)}></div>
+                
                 <span>  Hi { postedby != "" ? postedby : "guest" } </span>  
                 
                 

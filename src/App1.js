@@ -11,6 +11,7 @@ import { Redirect } from 'react-router-dom';
 import logo from './logo.svg';
 import  './App.css';
 import Countdown from './Countdown'
+
 import AuthForms from './AuthForms'
 import Signup from './Signup'
 
@@ -26,6 +27,8 @@ import { Column, Row } from 'simple-flexbox';
 import { StyleSheet, css } from 'aphrodite';
 import SidebarComponent from './SidebarComponent';
 import HeaderComponent from './HeaderComponent';
+import MeetupScraper from './MeetupScraper';
+
 
 
 
@@ -41,8 +44,10 @@ import txt from './Output.json';
 
 
 
+
 const styles = StyleSheet.create({
   container: {
+      position: 'relative',
       minHeight: '100vh'
   },
   content: {
@@ -193,6 +198,7 @@ const App1 = () => {
       setPostedby(usern);
     }
   }, []);
+
  console.log("in ap1:",postedby);
   
   
@@ -264,7 +270,7 @@ const App1 = () => {
         <Signup handlePostedby ={handlePostedby} /></div>
       </Route>
       <Route path="/">
-        <App eventlist={eventlist}/>
+        <App eventlist={eventlist} handleChange={handleChange}/>
       </Route>
     </Switch>
    
@@ -293,7 +299,7 @@ const initialList  = [
 ];
 
 
-const App = ({eventlist}) =>  {
+const App = ({eventlist, handleChange} ) =>  {
 
   const [pastStories,setPastStories] = React.useState([]);
 
@@ -439,14 +445,16 @@ const App = ({eventlist}) =>  {
         
         
       )}
+      <MeetupScraper handleChange={handleChange} />
+      
 
-<h1 className="headline-primary">PAST MEETS</h1>
-      <v list={pastStories}/>
+ 
       <hr></hr>
       <SearchForm searchTerm={searchTerm}
       onSearchInput={handleSearchInput}
       onSearchSubmit={handleSearchSubmit}
       />
+  
 
 
     </div>
