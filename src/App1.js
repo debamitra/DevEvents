@@ -40,7 +40,7 @@ import {
 } from "react-router-dom";
 
 
-import txt from './Output.json';
+
 
 
 
@@ -351,18 +351,18 @@ const App = ({eventlist, handleChange} ) =>  {
       }
         );
 
-        txt.forEach(elem => elem.postedby = 'guest' );
+        //txt.forEach(elem => elem.postedby = 'guest' );
       
       console.log("newresult",newresult);
-      const text = txt.concat(newresult);
-      console.log("text",text)
+      //const text = txt.concat(newresult);
+      //console.log("text",text)
       
 
-      const currEvents = text.filter(currentevents);
+      const currEvents = newresult.filter(currentevents);
       const searchedStories =  currEvents.filter(searched);
       console.log("sear:",searchedStories);
 
-      setPastStories(text.filter(pastevents));
+      setPastStories(newresult.filter(pastevents));
       
 
 

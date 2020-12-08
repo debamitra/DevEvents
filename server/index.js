@@ -140,6 +140,7 @@ console.log("numb: ",numb);
           "startdatetime":jsonObj.startDate,
           "enddatetime": jsonObj.endDate,
           "url": eventURL,
+          "description":jsonObj.description,
           "postedby":'guest',
           "attendeecount": numb
                 }
@@ -151,9 +152,10 @@ console.log("numb: ",numb);
 
   Event.findOne({url:newevent.url},function(err,user){
     console.log("hi");
-      if(user) return ;
+      if(user){ console.log("hi",user.url);return ;}
 
       newevent.save((err,doc)=>{
+        console.log("hello",doc.url);
           if(err) {console.log(err);
               return ;}
 
@@ -179,11 +181,11 @@ function  isEnglish(text){
          getList1(myMap.get(text));
          console.log(JSON.stringify(list1));
 
-         fs.writeFile('Output.json', JSON.stringify(list1), (err) => { 
+         /*fs.writeFile('Output.json', JSON.stringify(list1), (err) => { 
       
           // In case of a error throw err. 
           if (err) throw err; 
-      }) 
+      }) */
 
     }
     

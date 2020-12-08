@@ -67,6 +67,7 @@ const SubmitForm = ({postedbyuser, handleChange}) => {
     const [state, setState] = useState({
         name: '',
         url: '',
+        description:'',
         postedby: profilename,
         startdatetime: new Date(),
         enddatetime:new Date()
@@ -87,12 +88,12 @@ const SubmitForm = ({postedbyuser, handleChange}) => {
             
             setRedirect(true);
             console.log("resp: ",response.data);
-            const {name,url,startdatetime, enddatetime,postedby} = state;
-            setState({ name: '', url: '', postedby: "guest", startdatetime: new Date(), enddatetime:new Date()});
+            const {name,url,description,startdatetime, enddatetime,postedby} = state;
+            setState({ name: '', url: '', description:'', postedby: "guest", startdatetime: new Date(), enddatetime:new Date()});
             
             console.log("eventlist after response : ",name)   
             var newList = [];
-            newList.push({name:name, url:url, postedby: postedby, startdatetime:new Date(startdatetime).toUTCString(),
+            newList.push({name:name, url:url,description:description, postedby: postedby, startdatetime:new Date(startdatetime).toUTCString(),
                enddatetime:new Date(enddatetime).toUTCString()});
             
             console.log("eventlist after handle change : ",newList)    
@@ -169,6 +170,14 @@ const SubmitForm = ({postedbyuser, handleChange}) => {
           />
           </div>
         </Form.Group>
+        <Form.Group controlId="exampleForm.ControlTextarea1">
+    <Form.Label>Description</Form.Label>
+    <Form.Control as="textarea" rows={5} name="description"
+            value={state.description}
+            placeholder="Enter a description"
+            onChange={onInputChange}/>
+  </Form.Group>
+        
         <Form.Label>Start time </Form.Label><span> : </span>
             <DateTimePicker
             name="startDate"
