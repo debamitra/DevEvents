@@ -27,7 +27,7 @@ import { Column, Row } from 'simple-flexbox';
 import { StyleSheet, css } from 'aphrodite';
 import SidebarComponent from './SidebarComponent';
 import HeaderComponent from './HeaderComponent';
-import MeetupScraper from './MeetupScraper';
+
 
 
 
@@ -445,7 +445,7 @@ const App = ({eventlist, handleChange} ) =>  {
         
         
       )}
-      <MeetupScraper handleChange={handleChange} />
+      
       
 
  
