@@ -209,12 +209,12 @@ function  isEnglish(text){
 
  
 
-  fs.writeFile('../hacker-stories/public/Output.json', JSON.stringify(list1), (err) => { 
+  /*fs.writeFile('../hacker-stories/public/Output.json', JSON.stringify(list1), (err) => { 
     console.log("writtent to file");
    // In case of a error throw err. 
    if (err) throw err; 
   
-}) 
+}) */
   //list.forEach((c) => {
    //isEnglish(c);
   //});
