@@ -1,14 +1,7 @@
 import React, { useEffect } from "react";
 import axios from 'axios';
 import styled from 'styled-components';
-
-
-import NameForm from './SubmitEvent'
-
 import { Redirect } from 'react-router-dom';
-
-
-import logo from './logo.svg';
 import  './App.css';
 import Countdown from './Countdown'
 
@@ -17,11 +10,8 @@ import Signup from './Signup'
 
 import TasksComponent from './TasksComponent';
 import PastEventsComponent from './PastEventsComponent';
-import ReactDOM from 'react-dom';
-import { ReactComponent as Check } from './check.svg';
 
-import Header from './components/Header';
-import { SubmitForm, MyList } from './components/SubmitForm';
+import { SubmitForm } from './components/SubmitForm';
 
 import { Column, Row } from 'simple-flexbox';
 import { StyleSheet, css } from 'aphrodite';
@@ -82,18 +72,6 @@ lastRow: {
 }
 });
 
-function Tick() {
-  const element = (
-    <div className="clock">
-
-      <h4>Hello, guest ! It's {new Date().toLocaleTimeString()}.</h4>
-    </div>
-  );
- 
-  //ReactDOM.render(element, document.getElementById('time'));
-}
-
-setInterval(Tick, 1000);
 
 const Submit = ( {postedbyuser, handleChange} ) => (
   <div className="container-submit">
@@ -117,7 +95,7 @@ const useSemiPersistentState = (key, initialState) => {
     localStorage.getItem(key) || initialState
   );
   console.log("in semiPErsistnt");
-  React.useEffect(() => { //function called called when value/key changes
+  React.useEffect(() => { //function called  when value/key changes
     localStorage.setItem(key,value);
     console.log("in use effect in semipersistenat key:value",key,value);
   }, [value, key]);
@@ -191,7 +169,6 @@ const App1 = () => {
 
   useEffect(() => {
     const loggedInUserAgain = localStorage.getItem("user");
-    console.log("loggedinUser",loggedInUserAgain);
     if (loggedInUserAgain) {
       const foundUser = JSON.parse(loggedInUserAgain);
       const usern = foundUser.username;
@@ -199,7 +176,7 @@ const App1 = () => {
     }
   }, []);
 
- console.log("in ap1:",postedby);
+ 
   
   
   
@@ -232,7 +209,7 @@ const App1 = () => {
     const newList = eventlist.concat(newValue);
  
     setEventList(newList);
-    console.log("inside handle change", newValue);
+
   }
   const padding = {
 
@@ -289,14 +266,7 @@ const App1 = () => {
 }
 
 
-// Events to add list
-
-
- 
-
-const initialList  = [
- 
-];
+const initialList  = [];
 
 
 const App = ({eventlist, handleChange} ) =>  {
@@ -351,22 +321,15 @@ const App = ({eventlist, handleChange} ) =>  {
       }
         );
 
-        //txt.forEach(elem => elem.postedby = 'guest' );
-      
-      console.log("newresult",newresult);
-      //const text = txt.concat(newresult);
-      //console.log("text",text)
       
 
       const currEvents = newresult.filter(currentevents);
       const searchedStories =  currEvents.filter(searched);
-      console.log("sear:",searchedStories);
+
 
       setPastStories(newresult.filter(pastevents));
       
 
-
-      /////////////////////////////////////////////////////////
     
           dispatchStories({
             type: 'STORIES_FETCH_SUCCESS',
@@ -413,9 +376,6 @@ const App = ({eventlist, handleChange} ) =>  {
         newresult2.push(temp);
       }
         );
-      
-      
-      //const x = stories.data.concat(newresult2);
  
 
 
@@ -424,13 +384,6 @@ const App = ({eventlist, handleChange} ) =>  {
     <div >
       <h1 className="headline-primary">
       </h1>
-      
-      
-
-      
-     
- 
-
       
       {stories.isError && <p>Something went wrong ...</p>}
       {stories.isLoading ? (
@@ -513,16 +466,6 @@ const List = ({ list, onRemoveItem }) => (
   <TasksComponent containerStyles={styles.tasks} list={list}/>
   
   </Row>)
-  /*list.map(item => (
-    <Item 
-     key={item.name} 
-     item={item}
-     onRemoveItem={onRemoveItem}
-    /> 
-   ));*/
-
-
-  
 
   const Item = ({item, onRemoveItem}) => (
     
@@ -534,12 +477,7 @@ const List = ({ list, onRemoveItem }) => (
     <div className="sub-item2">
       start: {new Date(item.startDate).toUTCString()}
       <Countdown startDate={item.startDate}/>
-    </div>
-    
-      
-  
-
-      
+    </div>  
 
   </div>
 
@@ -624,7 +562,7 @@ const StyledColumn = styled.span`
    color: #ffffff;
  }
 `;
-// 171212 - black    ffffff -> white
+
 const StyledButtonSmall = styled(StyledButton)`
   padding: 5px;
 `;

@@ -5,12 +5,12 @@ var mongoose=require('mongoose');
 const eventSchema=mongoose.Schema({
     name:{
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     url:{
         type: String,
         required: true,
-        unique: true
     },
     description:{
         type: String
@@ -31,12 +31,6 @@ const eventSchema=mongoose.Schema({
 
 
 
-
-
-
-
-
-// find by token
 
 
 module.exports=mongoose.model('Event',eventSchema);

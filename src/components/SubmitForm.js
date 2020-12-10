@@ -41,16 +41,7 @@ const Item = ({item, onRemoveItem}) => (
 
 );
   
-  const MyList = ( {eventlist} ) => {
-     
-     
-    return (
-        
-      <div>
-        <List list={eventlist} />
-      </div>
-    );
-  };
+
 
   
 
@@ -208,6 +199,5 @@ const SubmitForm = ({postedbyuser, handleChange}) => {
 
 
 export {
-    SubmitForm,
-    MyList
+    SubmitForm
   }
