@@ -1,5 +1,5 @@
 
-This webapp is a side/practice project to learn javascript and build an app end to end. It scrapes data about technology-centered events happening recently from meetups website and displas them.
+This webapp is a side/practice project to learn javascript and build an app end to end. People can use this app to discover online technology-centered events happening in the near future.
 
 ## Tech Stack :
   * MongoDB
