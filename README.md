@@ -1,10 +1,10 @@
-##Tech Stack for this project :
+## Tech Stack for this project :
   MongoDB
   Express
   React
   Node
 
-##Local Setup
+## Local Setup
 1. Clone project
 2. Install Node environment
 3. Setup  a MongoDB database, get the URL, create a .env file inside project directory and copy the URL as below
