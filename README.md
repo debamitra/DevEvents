@@ -1,6 +1,8 @@
 
 This webapp is a side/practice project to learn javascript and build an app end to end. People can use this app to discover technology-centered events happening online in the near future.
 
+Deployed here : https://discover-tech-meets-app.herokuapp.com/
+
 ## Tech Stack :
   * MongoDB
   * Express
