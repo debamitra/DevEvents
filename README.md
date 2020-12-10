@@ -1,3 +1,6 @@
+
+This webapp is a side/practice project to learn javascript and build an app end to end. It scrapes data about technology-centered events happening recently from meetups website and displas them.
+
 ## Tech Stack :
   * MongoDB
   * Express
@@ -11,8 +14,8 @@
      ```  MONGODB_URL= "" ```
 4. Execute the following commands in root directory of the project.
  ```
- npm install
- npm run start-app
+   npm install
+   npm run start-app
  ```
 
 
