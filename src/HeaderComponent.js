@@ -14,7 +14,7 @@ import {
 const styles = StyleSheet.create({
     avatar: {
         height: 35,
-        width: 35,
+        //width: 35,
         borderRadius: 50,
         marginLeft: 14,
         border: '1px solid #DFE0EB',
@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
         lineHeight: '20px',
         textAlign: 'right',
         letterSpacing: 0.2,
-        '@media (max-width: 768px)': {
-            display: 'none'
-        }
+        //'@media (max-width: 768px)': {
+          //  display: 'none'
+        //}
     },
     separator: {
         borderLeft: '1px solid #DFE0EB',
