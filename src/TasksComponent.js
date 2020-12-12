@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row , Column} from 'simple-flexbox';
+import { Row, Column } from 'simple-flexbox';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import CardComponent from './CardComponent';
 import MiniCardComponent from './MiniCardComponent';
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     miniCardContainer: {
         flexGrow: 1,
         marginRight: 30,
-        
+
         '@media (max-width: 768px)': {
             marginTop: 30,
             maxWidth: 'none'
@@ -70,42 +70,61 @@ const TAGS = {
 }
 
 class TasksComponent extends React.Component {
-    
 
-    state = { items: [
-        {title: 'My awesome tech event', checked: false, tag: TAGS.URGENT },
-        {title: 'React for beginners , an introductory talk', checked: false, tag: TAGS.NEW },
-        {title: 'Jims roundup of react 17', checked: true, tag: TAGS.DEFAULT }
-    ]};
 
-    renderTask = ({name, url, startDate, endDate, postedby, tag = TAGS.URGENT}, index) => {
+    state = {
+        items: [
+            { title: 'My awesome tech event', checked: false, tag: TAGS.URGENT },
+            { title: 'React for beginners , an introductory talk', checked: false, tag: TAGS.NEW },
+            { title: 'Jims roundup of react 17', checked: true, tag: TAGS.DEFAULT }
+        ]
+    };
+
+    renderTask = ({ name, url, startDate, endDate, postedby, tag = TAGS.URGENT }, index) => {
         console.log("render task");
         const month = new Date(startDate).getMonth();
         return (
-        <Row horizontal="space-between" vertical="center">
-            
-            <Row>
-                <MiniCardComponent className={css(styles.miniCardContainer)} title={month} value={new Date(startDate).getDate()} day={new Date(startDate).getDay()}/>
-                    
+            <Row
+                flexGrow={1} wrap
+                //horizontal="space-between"
+                // vertical="center"
+                breakpoints={{ 900: "column" }}
+            >
+
+
+                <Column
+                    breakpoints={{
+                        900: {},
+
+                    }}
+                //flexGrow={1}
+                >
+                    <MiniCardComponent className={css(styles.miniCardContainer)} title={month} value={new Date(startDate).getDate()} day={new Date(startDate).getDay()} />
+                </Column>
+                <Column
+                    breakpoints={{ 900: {} }}
+                //flexGrow={1}
+                >
+
+                    <span className={css(styles.itemTitle)}><a href={url}>{name}</a></span>
+
+
+                    <span className={css(styles.subtitle)}>online | posted by {postedby}  </span>
+
+                    <Countdown startDate={startDate} />
+
+                </Column>
                 <Column>
-                <span className={css(styles.itemTitle)}><a href={url}>{name}</a></span>
-                
-                
-                
-                
-        <span className={css(styles.subtitle)}>online | posted by {postedby}  </span>
-        <Countdown startDate={startDate}/>
-                </Column> 
-                
-               
-                
+
+                    <Row horizontal="spaced">{this.renderTag(tag, index)}</Row>
+
+                </Column>
+
+
+
             </Row>
-            {this.renderTag(tag, index)}
-            
-           
-        </Row>
-    );
-        }
+        );
+    }
 
     renderTag = ({ text, backgroundColor, color }, index) => (
         <Row horizontal="center" vertical="center"
@@ -115,9 +134,9 @@ class TasksComponent extends React.Component {
         </Row>
     );
 
-    
 
-  
+
+
 
     getNextTag = (except = 'URGENT') => {
         const tagLabels = ['URGENT', 'NEW', 'DEFAULT'];
@@ -144,21 +163,21 @@ class TasksComponent extends React.Component {
     )
 
     render() {
-        const {containerStyles, list } = this.props;
-        console.log("list: ",list);
-        let  newresult = [];
+        const { containerStyles, list } = this.props;
+        console.log("list: ", list);
+        let newresult = [];
         const temp = {
-            name : "ntestame",
-            url : "testurl",
-            postedby : "postedby",
-            startDate :  "startdatetime" + "",
-            endDate : "enddatetime" + ""
-          };
-          newresult.push(temp);
+            name: "ntestame",
+            url: "testurl",
+            postedby: "postedby",
+            startDate: "startdatetime" + "",
+            endDate: "enddatetime" + ""
+        };
+        newresult.push(temp);
         const text = newresult.concat(list);
-        console.log("text  ",text);
+        console.log("text  ", text);
         return (
-            
+
             <CardComponent containerStyles={this.props.containerStyles} title="Upcoming tech events" link="" subtitle="Recent"
                 items={[
                     /*<Row horizontal="space-between" vertical="center">
