@@ -163,7 +163,7 @@ class TasksComponent extends React.Component {
     )
 
     render() {
-        const { containerStyles, list } = this.props;
+        const { containerStyles, list , title} = this.props;
         console.log("list: ", list);
         let newresult = [];
         const temp = {
@@ -178,7 +178,7 @@ class TasksComponent extends React.Component {
         console.log("text  ", text);
         return (
 
-            <CardComponent containerStyles={this.props.containerStyles} title="Upcoming tech events" link="" subtitle="Recent"
+            <CardComponent containerStyles={this.props.containerStyles} title={title} link="" subtitle="Recent"
                 items={[
                     /*<Row horizontal="space-between" vertical="center">
                         <span className={css(styles.itemTitle, styles.greyTitle)}>add a tech event</span>

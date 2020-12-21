@@ -7,6 +7,16 @@ import  './App.css';
 
 
 function Countdown({startDate}) {
+  /*let date = new Date(startDate); 
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  console.log(navigator.language );
+  let intlDateObj = new Intl.DateTimeFormat(navigator.language, { 
+    timeZone: tz
+}); */
+
+//let usaTime = intlDateObj.format(date); 
+//console.log('USA date: ' + usaTime); 
+  //console.log(tz);
 
   const calculateTimeLeft = () => {
     let year = new Date().getFullYear();

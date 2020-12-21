@@ -13,10 +13,13 @@ import PastEventsComponent from './PastEventsComponent';
 
 import { SubmitForm } from './components/SubmitForm';
 
+import { New } from './components/New';
+
 import { Column, Row } from 'simple-flexbox';
 import { StyleSheet, css } from 'aphrodite';
 import SidebarComponent from './SidebarComponent';
 import HeaderComponent from './HeaderComponent';
+import ReactCalender from './ReactCalender';
 
 
 
@@ -177,30 +180,7 @@ const App1 = () => {
   }, []);
 
  
-  
-  
-  
 
-  function Greeting(props) {
-
-    const isLoggedIn = (postedby != "");
-    console.log("inside greetins: ", postedby);
-    if (isLoggedIn) {
-      console.log("inside isloggedin: ", postedby);
-      return (
-        
-        <Link style={{padding: 20}} to="/logout">logout</Link>
-        
-
-      );
-      
-    }
-    else{
-      console.log("inside isloggedin else: ", postedby);
-      return [<Link style={{padding: 20}} to="/login">login</Link>, " | ",
-    <Link style={{padding: 20}} to="/signup">signup</Link> ]
-    }
-  }
   
 
   
@@ -232,6 +212,9 @@ const App1 = () => {
    
 
     <Switch>
+    <Route path="/new">
+        <New/>
+      </Route>
       <Route path="/submit">
         <Submit postedbyuser={postedby} handleChange={handleChange}/>
       </Route>
@@ -274,7 +257,7 @@ const App = ({eventlist, handleChange} ) =>  {
   const [pastStories,setPastStories] = React.useState([]);
 
   const [searchTerm, setSearchTerm] = useSemiPersistentState('search', '');
-  console.log("in app");
+
   const [url, setUrl] = React.useState(
     `${API_ENDPOINT}${searchTerm}`
   );
@@ -362,26 +345,24 @@ const App = ({eventlist, handleChange} ) =>  {
 
     event.preventDefault();
   };
-  let  newresult2 = [];
-
-      eventlist.forEach(elem => {
-        const {name, url, postedby, startDate, endDate} = elem;
-        const temp = {
-          name : name,
-          url : url,
-          postedby : postedby,
-          startDate :  elem.startdatetime+"",
-          endDate : elem.enddatetime+""
-        };
-        newresult2.push(temp);
-      }
-        );
  
 
 
   return (
   
     <div >
+      <Row horizontal="space-between" justifyContent="flex-end"> 
+
+      <Column ><SearchForm searchTerm={searchTerm}
+      onSearchInput={handleSearchInput}
+      onSearchSubmit={handleSearchSubmit}
+      />
+      </Column>
+      <Column  ><ReactCalender/></Column>
+      
+      </Row>
+      
+     
       <h1 className="headline-primary">
       </h1>
       
@@ -403,10 +384,7 @@ const App = ({eventlist, handleChange} ) =>  {
 
  
       <hr></hr>
-      <SearchForm searchTerm={searchTerm}
-      onSearchInput={handleSearchInput}
-      onSearchSubmit={handleSearchSubmit}
-      />
+     
   
 
 
@@ -463,7 +441,7 @@ const List = ({ list, onRemoveItem }) => (
   <Row horizontal="space-between" className={css(styles.lastRow)}
   breakpoints={{ 1024: 'column' }}>
   
-  <TasksComponent containerStyles={styles.tasks} list={list}/>
+  <TasksComponent containerStyles={styles.tasks} list={list} title={"Upcoming tech events"}/>
   
   </Row>)
 

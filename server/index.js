@@ -133,7 +133,7 @@ function scrapeEvent(eventURL) {
         if (user) { console.log("hi", user.url); return; }
 
         newevent.save((err, doc) => {
-          console.log("hello", doc.url);
+          console.log("hello", doc);
           if (err) {
             console.log(err);
             return;
@@ -168,8 +168,9 @@ const scrapeHistoryAndEvents = async () => {
 ///////////run cron job for scraping//////////////////////////
 
 var CronJob = require('cron').CronJob;
-var job = new CronJob('0 */10 * * * *', scrapeHistoryAndEvents
+var job = new CronJob('0 */2 * * * *', scrapeHistoryAndEvents
   , null, true, 'America/Los_Angeles');
+  console.log("cron job");
 job.start();
 
 
@@ -212,6 +213,18 @@ app.get('/events', (req, res) => {
 
   Event.find({}, function (err, event) {
     const sortedEvents = event.slice().sort((a, b) => new Date(a.startdatetime) - new Date(b.startdatetime));
+    res.send(sortedEvents);
+
+  });
+
+})
+
+app.get('/new', (req, res) => {
+
+  Event.find({}, function (err, event) {
+    const sortedEvents = event.slice().sort((a, b) => new Date(a.startdatetime) - new Date(b.startdatetime));
+    console.log("new :",event);
+    //console.log(event.op[0]._id.getTimeStamp())
     res.send(sortedEvents);
 
   });

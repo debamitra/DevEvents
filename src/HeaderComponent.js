@@ -104,6 +104,7 @@ function HeaderComponent(props) {
         <Row className={css(styles.container)} vertical="center" horizontal="space-between" {...otherProps}>
             
             <Link style={{marginLeft: 0}} to="/">home</Link> 
+            <Link style={{padding: 20}} to="/new">new</Link> 
             <Link style={{padding: 20}} to="/submit">submit</Link> 
             <Row vertical="center">
                 {/*<div className={css(styles.iconStyles)}>

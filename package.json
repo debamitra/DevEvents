@@ -18,6 +18,7 @@
     "cookie-parser": "^1.4.5",
     "cron": "^1.8.2",
     "detectlanguage": "^2.0.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "jsonwebtoken": "^8.5.1",
@@ -30,6 +31,7 @@
     "react": "^16.13.1",
     "react-bootstrap": "^1.4.0",
     "react-bootstrap-time-picker": "^2.0.1",
+    "react-calendar": "^3.2.1",
     "react-datetime": "^3.0.4",
     "react-datetime-picker": "^3.0.4",
     "react-dom": "^16.13.1",
@@ -38,8 +40,7 @@
     "react-time-picker": "^4.0.1",
     "simple-flexbox": "^2.3.2",
     "styled-components": "^5.2.0",
-    "uuid": "^8.3.1",
-    "dotenv": "^8.2.0"
+    "uuid": "^8.3.1"
   },
   "scripts": {
     "start-client": "react-scripts start",
