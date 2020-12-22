@@ -163,6 +163,7 @@ const Logout = ({handlePostedby}) => {
 
 const App1 = () => {
 
+
   const [postedby, setPostedby] = React.useState("");
 
   const handlePostedby = (user) => {
@@ -254,9 +255,19 @@ const initialList  = [];
 
 const App = ({eventlist, handleChange} ) =>  {
 
+  
+  const [searchDate, setSearchDate] = React.useState(new Date());
   const [pastStories,setPastStories] = React.useState([]);
 
   const [searchTerm, setSearchTerm] = useSemiPersistentState('search', '');
+
+  const handleDateSearch = (newValue) => {
+    setSearchDate(newValue);
+    setSearchTerm('');
+
+  }
+
+  
 
   const [url, setUrl] = React.useState(
     `${API_ENDPOINT}${searchTerm}`
@@ -286,6 +297,11 @@ const App = ({eventlist, handleChange} ) =>  {
         return Date.parse(new Date(story.startDate)) >= Date.parse(new Date())
       }
 
+      function ondateEvents(story){
+        console.log("hiiiii in ondate",new Date(story.startDate).getDate());
+        return new Date(story.startDate).getDate() == new Date(searchDate).getDate()
+      }
+
       function pastevents(story) {
         return Date.parse(new Date(story.startDate)) < Date.parse(new Date())
       }
@@ -304,10 +320,23 @@ const App = ({eventlist, handleChange} ) =>  {
       }
         );
 
-      
+      let currEvents = [];
+      console.log("searchDate:",searchDate);
+      console.log("newresult: ",newresult);
 
-      const currEvents = newresult.filter(currentevents);
+      if(searchDate.getDate() != new Date().getDate()) {
+        console.log("searchdate currents: ",currEvents);
+        currEvents = newresult.filter(ondateEvents);
+        console.log("searchdate currents: ",currEvents);
+      }
+      else {
+        currEvents = newresult.filter(currentevents);
+        console.log("non search date currents: ",currEvents);
+
+      }
+     
       const searchedStories =  currEvents.filter(searched);
+      console.log("searchstories:",searchedStories);
 
 
       setPastStories(newresult.filter(pastevents));
@@ -319,10 +348,11 @@ const App = ({eventlist, handleChange} ) =>  {
             payload: searchedStories, //txt
           });
     } catch {
+      
       dispatchStories({ type: 'STORIES_FETCH_FAILURE'});
     }
     
-  }, [url]);
+  }, [url,searchDate]);
 
   React.useEffect(() => {
     handleFetchStories();
@@ -342,6 +372,7 @@ const App = ({eventlist, handleChange} ) =>  {
 
   const handleSearchSubmit = event => {
     setUrl(`${API_ENDPOINT}${searchTerm}`);
+    setSearchDate(null);
 
     event.preventDefault();
   };
@@ -358,7 +389,7 @@ const App = ({eventlist, handleChange} ) =>  {
       onSearchSubmit={handleSearchSubmit}
       />
       </Column>
-      <Column  ><ReactCalender/></Column>
+      <Column  ><ReactCalender handleDateSearch={handleDateSearch}/></Column>
       
       </Row>
       
