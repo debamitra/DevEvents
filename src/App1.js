@@ -284,8 +284,8 @@ const initialList = [];
 
 
 const App = ({ eventlist, handleChange }) => {
-  const [tags, setTags] = React.useState([]);
-  const [sortBy, setSortBy] = React.useState({label: "upcoming events", value: 46 });
+  //const [tags, setTags] = React.useState([]);
+  const [sortBy, setSortBy] = React.useState({ label: "upcoming events", value: 46 });
 
 
   const [searchDate, setSearchDate] = React.useState(new Date());
@@ -312,9 +312,9 @@ const App = ({ eventlist, handleChange }) => {
 
 
   const handleFetchStories = React.useCallback(async () => {
-    let srt = 42;
-    if(sortBy.value == 58 ){
-      srt=58;
+    let srt = 46;
+    if (sortBy.value == 58) {
+      srt = 58;
     }
 
     dispatchStories({ type: 'STORIES_FETCH_INIT' });
@@ -344,13 +344,14 @@ const App = ({ eventlist, handleChange }) => {
       let newresult = [];
 
       result.data.forEach(elem => {
-        const { name, url, startdatetime, enddatetime, postedby } = elem;
+        const { name, url, startdatetime, enddatetime, postedby,tags } = elem;
         const temp = {
           name: name,
           url: url,
           postedby: postedby,
           startDate: startdatetime + "",
-          endDate: enddatetime + ""
+          endDate: enddatetime + "",
+          tags : tags
         };
         newresult.push(temp);
       }
@@ -374,7 +375,7 @@ const App = ({ eventlist, handleChange }) => {
       const searchedStories = currEvents.filter(searched);
       console.log("searchstories:", searchedStories);
 
-     
+
 
 
       setPastStories(newresult.filter(pastevents));
@@ -427,13 +428,18 @@ const App = ({ eventlist, handleChange }) => {
     })
   }
 
-  const handleSortBy = (value) =>{
-    console.log("inside handle sort by ",value); //{label:"trt" , value:46}
-    
+  const handleSortBy = (value) => {
+    console.log("inside handle sort by ", value); //{label:"trt" , value:46}
+
     setSortBy(value);
 
 
   }
+  let title;
+  if (sortBy.value == 46)
+    title = "Upcoming tech events";
+  else
+    title = "Recently submitted tech events"
 
 
 
@@ -444,7 +450,7 @@ const App = ({ eventlist, handleChange }) => {
 
 
       </Row>
-      <FilterSearchComponent handleSortBy={handleSortBy}/>
+      <FilterSearchComponent handleSortBy={handleSortBy} />
 
 
 
@@ -459,6 +465,7 @@ const App = ({ eventlist, handleChange }) => {
 
           <List
             list={stories.data}
+            title={title}
             onRemoveItem={handleRemoveStory}
           />
 
@@ -522,11 +529,11 @@ const PastList = ({ list, onRemoveItem }) => (
 
 
 
-const List = ({ list, onRemoveItem }) => (
+const List = ({ list, title, onRemoveItem }) => (
   <Row horizontal="space-between" className={css(styles.lastRow)}
     breakpoints={{ 1024: 'column' }}>
 
-    <TasksComponent containerStyles={styles.tasks} list={list} title={"Upcoming tech events"} />
+    <TasksComponent containerStyles={styles.tasks} list={list} title={title} />
 
   </Row>)
 

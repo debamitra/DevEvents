@@ -122,6 +122,7 @@ function scrapeEvent(eventURL) {
         "url": eventURL,
         "description": jsonObj.description,
         "postedby": 'guest',
+        "tags" : ['meetup'],
         "attendeecount": numb
       }
       getMap(jsonObj.name, myData);

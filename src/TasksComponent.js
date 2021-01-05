@@ -64,9 +64,9 @@ const styles = StyleSheet.create({
 });
 
 const TAGS = {
-    URGENT: { text: 'meetup', backgroundColor: '#FEC400', color: '#FFFFFF' },
-    NEW: { text: 'livestream', backgroundColor: '#29CC97', color: '#FFFFFF' },
-    DEFAULT: { text: 'webinar', backgroundColor: '#F0F1F7', color: '#9FA2B4' },
+    URGENT: {  backgroundColor: '#FEC400', color: '#FFFFFF' },
+    NEW: { backgroundColor: '#29CC97', color: '#FFFFFF' },
+    DEFAULT: {  backgroundColor: '#656fab', color: '#FFFFFF' },
 }
 
 class TasksComponent extends React.Component {
@@ -80,9 +80,22 @@ class TasksComponent extends React.Component {
         ]
     };
 
-    renderTask = ({ name, url, startDate, endDate, postedby, tag = TAGS.URGENT }, index) => {
+    renderTask = ({ name, url, startDate, endDate, postedby, tag = TAGS.URGENT,tags }, index) => {
+        const tagLabels = ['URGENT', 'NEW', 'DEFAULT'];
         console.log("render task");
         const month = new Date(startDate).getMonth();
+  
+        const tagitems = tags.map((item) => 
+        <Row horizontal="center" vertical="center"
+            style={{ backgroundColor:TAGS[tagLabels[Math.floor((Math.random()*3))]].backgroundColor, color:TAGS[tagLabels[Math.floor((Math.random()*3))]].color }} className={css(styles.tagStyles)}
+            onClick={() => this.onTagClick(index)}>
+            {item}
+        </Row>
+           
+
+);
+//console.log("tagidtems ",tagitems);
+   
         return (
             <Row
                 flexGrow={1} wrap
@@ -116,7 +129,13 @@ class TasksComponent extends React.Component {
                 </Column>
                 <Column>
 
-                    <Row horizontal="spaced">{this.renderTag(tag, index)}</Row>
+                   {/* <Row horizontal="spaced">
+                        {this.renderTag(text, getNextTag(), index)}
+                    
+                    </Row>
+                    <Row horizontal="spaced">{tags}</Row>*/
+                }
+                <Row>{tagitems}</Row>
 
                 </Column>
 
@@ -126,7 +145,7 @@ class TasksComponent extends React.Component {
         );
     }
 
-    renderTag = ({ text, backgroundColor, color }, index) => (
+    renderTag = ( text, {backgroundColor, color }, index) => (
         <Row horizontal="center" vertical="center"
             style={{ backgroundColor, color }} className={css(styles.tagStyles)}
             onClick={() => this.onTagClick(index)}>
@@ -138,9 +157,11 @@ class TasksComponent extends React.Component {
 
 
 
-    getNextTag = (except = 'URGENT') => {
+    getNextTag = () => {
         const tagLabels = ['URGENT', 'NEW', 'DEFAULT'];
-        const tagIndex = (tagLabels.indexOf(except) + 1) % 3;
+        const tagIndex = Math.floor((Math.random()*3));
+        
+        console.log("tagindex:;",tagIndex);
         return TAGS[tagLabels[tagIndex]];
     }
 
