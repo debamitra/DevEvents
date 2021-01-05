@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         paddingRight: 16
     },
     link: {
-        fontFamily: 'Muli',
+        //fontFamily: 'Muli',
         fontStyle: 'normal',
         fontWeight: '600',
         fontSize: 14,
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         cursor: 'pointer'
     },
     subtitle: {
-        fontFamily: 'Muli',
+        //fontFamily: 'Muli',
         fontStyle: 'normal',
         fontWeight: 'normal',
         fontSize: 12,
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         marginLeft: 2
     },
     title: {
-        fontFamily: 'Muli',
+        //fontFamily: 'Muli',
         fontStyle: 'normal',
         fontWeight: 'bold',
         fontSize: 19,

@@ -1,0 +1,54 @@
+.butt { 
+    position: absolute; 
+    border-radius: 5px; 
+    right: 10px; 
+    z-index: 1; 
+    border: none; 
+    top: 6px; 
+    height: 25px; 
+    cursor: pointer; 
+    color: rgb(197, 186, 186); 
+    background-color: #ffffff; 
+    transform: translateX(2px); 
+    font-weight:bold;
+  
+    
+} 
+
+#bu {
+    position: absolute; 
+    border-radius: 5px; 
+    right: 20px; 
+    z-index: 2; 
+    border: none; 
+    top: 2px; 
+    height: 25px; 
+    cursor: pointer; 
+    color: rgb(197, 186, 186); 
+    background-color: #ffffff; 
+    transform: translateX(2px); 
+
+}
+
+.butt:focus { outline: none; 
+    color: rgb(100, 95, 95);   
+}
+#bu:hover { outline: none; 
+    color: rgb(100, 95, 95);   
+}
+
+#ember538  {
+    height: 28px;
+    width: 15px;
+    fill: #4799eb;
+    
+    
+    position: absolute;
+    
+    transition: all 180ms;
+}
+
+
+
+
+

@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     },
     itemTitle: {
         color: '#252733',
-        fontFamily: 'Muli',
+        //fontFamily: 'Muli',
         fontStyle: 'normal',
         fontWeight: '600',
         fontSize: 18,
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     tagStyles: {
         borderRadius: 5,
         cursor: 'pointer',
-        fontFamily: 'Muli',
+        //fontFamily: 'Muli',
         fontStyle: 'normal',
         fontWeight: 'bold',
         fontSize: 11,
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         }
     },
     subtitle: {
-        fontFamily: 'Muli',
+        //fontFamily: 'Muli',
         fontStyle: 'normal',
         fontWeight: 'normal',
         fontSize: 14,

@@ -26,8 +26,11 @@ const eventSchema=mongoose.Schema({
     },
     postedby:{
         type: String
+    },
+    tags:{
+        type: [String], index: true
     }
-});
+}, { timestamps: true } )  ;
 
 
 

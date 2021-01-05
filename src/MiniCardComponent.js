@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     },
     title: {
         color: '#9FA2B4',
-        fontFamily: 'Muli',
+        //fontFamily: 'Muli',
         fontStyle: 'normal',
         fontWeight: 'bold',
         fontSize: 14,
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     },
     value: {
         color: '#252733',
-        fontFamily: 'Muli',
+        //fontFamily: 'Muli',
         fontStyle: 'normal',
         fontWeight: 'bold',
         fontSize: 16,
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     },
     day: {
         color: '#252733',
-        fontFamily: 'Muli',
+        //fontFamily: 'Muli',
         fontStyle: 'normal',
         fontWeight: 'bold',
         fontSize: 12,
@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
     }
 });
 
-const monthNames = ["JAN", "FEB", "MAR", "APR", "May", "June",
-  "July", "August", "September", "OCT", "NOV", "DEC"
+const monthNames = ["JAN", "FEB", "MAR", "APR", "May", "JUNE",
+  "JULY", "August", "September", "OCT", "NOV", "DEC"
 ];
 const dayNames = ["sunday","monday", "tuesday","wednesday","thursday","friday", "saturday"]
 

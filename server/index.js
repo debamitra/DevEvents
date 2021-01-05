@@ -29,6 +29,8 @@ app.use(cookieParser());
 
 //////////////////MEETUP SCRAPING CODE///////////////////////////
 
+//let MEETUP_DATE_RANGE_SEARCH_URL = `https://www.meetup.com/find/in--hyderabad/?eventType=online&keywords=tech&customStartDate=${sd}T13%3A30-05%3A00&customEndDate=${ed}T13%3A29-05%3A00`
+
 const MEETUP_SEARCH_URL = "https://www.meetup.com/find/events/tech/?allMeetups=false&radius=Infinity&userFreeform=Hyderabad%2C+India&mcId=z1018096&mcName=Hyderabad%2C+IN&eventFilter=all"
 var list = new Array;
 
@@ -168,7 +170,7 @@ const scrapeHistoryAndEvents = async () => {
 ///////////run cron job for scraping//////////////////////////
 
 var CronJob = require('cron').CronJob;
-var job = new CronJob('0 */2 * * * *', scrapeHistoryAndEvents
+var job = new CronJob('0 */10 * * * *', scrapeHistoryAndEvents
   , null, true, 'America/Los_Angeles');
   console.log("cron job");
 job.start();
@@ -210,9 +212,18 @@ app.post('/send', (req, res) => {
 
 /*get events*/
 app.get('/events', (req, res) => {
+  console.log("sort by : ",req.query.sortby);
+  //Event.find({}).sort({createDate: -1}).execFind(function(err,docs){ console.log(docs)});
 
   Event.find({}, function (err, event) {
-    const sortedEvents = event.slice().sort((a, b) => new Date(a.startdatetime) - new Date(b.startdatetime));
+    let sortedEvents =[];
+    if(req.query.sortby==58){
+      console.log("insidew sortby server");
+      sortedEvents = event.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    }else{
+      sortedEvents = event.slice().sort((a, b) => new Date(a.startdatetime) - new Date(b.startdatetime));
+    }
+    
     res.send(sortedEvents);
 
   });
@@ -223,9 +234,20 @@ app.get('/new', (req, res) => {
 
   Event.find({}, function (err, event) {
     const sortedEvents = event.slice().sort((a, b) => new Date(a.startdatetime) - new Date(b.startdatetime));
-    console.log("new :",event);
+    //console.log("new :",event);
     //console.log(event.op[0]._id.getTimeStamp())
     res.send(sortedEvents);
+
+  });
+
+
+ 
+
+  Event.find({tags: { $in: ['helllo', 'me'] } }, function (err, event) {
+   
+    console.log("another finf :",event);
+    //console.log(event.op[0]._id.getTimeStamp())
+ 
 
   });
 
@@ -311,8 +333,12 @@ app.get('/api/profile', auth, function (req, res) {
 
 
 
+
+
 const PORT = process.env.PORT || 3030;
 
 app.listen(PORT, () => {
   console.log(`Listening on ${PORT}`);
 });
+
+
