@@ -104,7 +104,8 @@ function HeaderComponent(props) {
         <Row className={css(styles.container)} vertical="center" horizontal="space-between" {...otherProps}>
             
             <Link style={{marginLeft: 0}} to="/">home</Link> 
-            <Link style={{padding: 20}} to="/new">new</Link> 
+            { /*<Link style={{padding: 20}} to="/new">new</Link> 
+            */}
             <Link style={{padding: 20}} to="/submit">submit</Link> 
             {/*<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="ember538" class="section-header__action-icon ember-view"><path d="M13.025 1l-2.847 2.828 6.176 6.176h-16.354v3.992h16.354l-6.176 6.176 2.847 2.828 10.975-11z">
                             .</path>

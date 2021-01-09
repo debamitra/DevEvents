@@ -231,6 +231,59 @@ app.get('/events', (req, res) => {
 
 })
 
+
+
+app.post('/search', (req, res) => {
+
+console.log("inside /search ",req.body);
+const {selectedOptionTags, dates } = req.body;
+function ondateEvents(story) {
+  console.log("hiiiii in ondate", new Date(story.startdatetime).getDate());
+  return new Date(story.startdatetime).getDate() == new Date(dates).getDate()
+}
+
+if(selectedOptionTags != null  && selectedOptionTags.length != 0){
+  const findtags = selectedOptionTags.map((item) => (item.value))
+
+  Event.find({tags: { $all: findtags }}, function (err, event) {
+   
+    console.log("another finf :",event);
+    const fil = event.filter(ondateEvents);
+    res.send(fil);
+    //console.log(event.op[0]._id.getTimeStamp())
+ 
+
+  });
+}
+else {
+  
+  
+  Event.find({}, function (err, event) {
+   
+    console.log("another finf no tags :",event.length);
+    const currEvents = event.filter(ondateEvents);
+    console.log("another finf no tags :",currEvents.length);
+    
+    res.send(currEvents);
+    //console.log(event.op[0]._id.getTimeStamp())
+ 
+
+  });
+
+}
+})
+
+app.get('/tags', (req, res) => {
+
+  Event.find().distinct('tags', function(error, tagTitles) {
+    console.log("another tagtitles :",tagTitles);
+    res.send(tagTitles);
+    //respond with the results array
+   // res.json(results);
+});
+})
+
+
 app.get('/new', (req, res) => {
 
   Event.find({}, function (err, event) {
@@ -251,6 +304,14 @@ app.get('/new', (req, res) => {
  
 
   });
+
+
+  Event.find().distinct('tags', function(error, tagTitles) {
+    console.log("another tagtitles :",tagTitles);
+  
+    //respond with the results array
+   // res.json(results);
+});
 
 })
 

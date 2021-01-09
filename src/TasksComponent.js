@@ -86,11 +86,13 @@ class TasksComponent extends React.Component {
         const month = new Date(startDate).getMonth();
   
         const tagitems = tags.map((item) => 
+        <span>
         <Row horizontal="center" vertical="center"
-            style={{ backgroundColor:TAGS[tagLabels[Math.floor((Math.random()*3))]].backgroundColor, color:TAGS[tagLabels[Math.floor((Math.random()*3))]].color }} className={css(styles.tagStyles)}
+            style={{ backgroundColor:TAGS[tagLabels[Math.floor((Math.random()*3))]].backgroundColor, color:TAGS[tagLabels[Math.floor((Math.random()*3))]].color}} className={css(styles.tagStyles)}
             onClick={() => this.onTagClick(index)}>
             {item}
         </Row>
+        </span>
            
 
 );

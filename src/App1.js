@@ -15,6 +15,8 @@ import { SubmitForm } from './components/SubmitForm';
 
 import { New } from './components/New';
 
+
+
 import { Column, Row } from 'simple-flexbox';
 import { StyleSheet, css } from 'aphrodite';
 import SidebarComponent from './SidebarComponent';
@@ -284,8 +286,13 @@ const initialList = [];
 
 
 const App = ({ eventlist, handleChange }) => {
-  //const [tags, setTags] = React.useState([]);
+  //const [taglist, setTaglist] = React.useState([]);
+  const [searchResult, setSearchResult] = React.useState(null);
   const [sortBy, setSortBy] = React.useState({ label: "upcoming events", value: 46 });
+  const [searchState, setSearchState] = React.useState({
+    tagSearch: [],
+    dateSearch: ''
+  });
 
 
   const [searchDate, setSearchDate] = React.useState(new Date());
@@ -319,6 +326,7 @@ const App = ({ eventlist, handleChange }) => {
 
     dispatchStories({ type: 'STORIES_FETCH_INIT' });
     try {
+
       const result = await axios.get('/events', { params: { sortby: srt } });
 
       /////////////////////////////////////////////////////////
@@ -344,14 +352,14 @@ const App = ({ eventlist, handleChange }) => {
       let newresult = [];
 
       result.data.forEach(elem => {
-        const { name, url, startdatetime, enddatetime, postedby,tags } = elem;
+        const { name, url, startdatetime, enddatetime, postedby, tags } = elem;
         const temp = {
           name: name,
           url: url,
           postedby: postedby,
           startDate: startdatetime + "",
           endDate: enddatetime + "",
-          tags : tags
+          tags: tags
         };
         newresult.push(temp);
       }
@@ -372,8 +380,33 @@ const App = ({ eventlist, handleChange }) => {
 
       }
 
-      const searchedStories = currEvents.filter(searched);
+      let searchedStories = currEvents.filter(searched);
       console.log("searchstories:", searchedStories);
+      console.log("searchresult", searchResult);
+
+      if (searchResult != null) {
+        console.log("in serarch null");
+        let sresult = [];
+
+        searchResult.forEach(elem => {
+          const { name, url, startdatetime, enddatetime, postedby, tags } = elem;
+          const temp = {
+            name: name,
+            url: url,
+            postedby: postedby,
+            startDate: startdatetime + "",
+            endDate: enddatetime + "",
+            tags: tags
+          };
+          sresult.push(temp);
+        }
+        );
+        
+        searchedStories= [].concat(sresult) ;
+        
+        console.log("searchedStories",searchedStories);
+        
+      }
 
 
 
@@ -391,7 +424,9 @@ const App = ({ eventlist, handleChange }) => {
       dispatchStories({ type: 'STORIES_FETCH_FAILURE' });
     }
 
-  }, [url, searchDate, sortBy]);
+  }, [url, searchDate, sortBy, handleSearchResult,searchResult]);
+
+
 
   React.useEffect(() => {
     handleFetchStories();
@@ -435,6 +470,14 @@ const App = ({ eventlist, handleChange }) => {
 
 
   }
+
+  const handleSearchResult = (value) => {
+    console.log("inside handle search result by ", value); //{label:"trt" , value:46}
+
+    setSearchResult(value);
+
+
+  }
   let title;
   if (sortBy.value == 46)
     title = "Upcoming tech events";
@@ -450,7 +493,8 @@ const App = ({ eventlist, handleChange }) => {
 
 
       </Row>
-      <FilterSearchComponent handleSortBy={handleSortBy} />
+
+      <FilterSearchComponent handleSortBy={handleSortBy} handleSearchResult={handleSearchResult} />
 
 
 
