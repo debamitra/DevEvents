@@ -48,6 +48,10 @@
     transition: all 180ms;
 }
 
+.with-margin {
+    margin-bottom: 10px;
+  }
+
 
 
 
