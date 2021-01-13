@@ -27,6 +27,24 @@ app.use(bodyparser.json());
 app.use(cookieParser());
 
 
+function next30days(){
+let today = new Date();//indian time...blah blah gmt
+    let year = today.getFullYear();
+    let month = today.getMonth();
+    let date = today.getDate();
+    for(let i=0; i<30; i++){
+          let day=new Date(year, month, date + i);
+          year = day.getFullYear();
+          month= day.getMonth();
+          date = day.getDate();
+          console.log(day);
+          
+    }
+
+  }
+  //next30days();
+
+ //let  meetupURL = `https://www.meetup.com/find/events/tech/?allMeetups=false&radius=Infinity&userFreeform=Hyderabad%2C+India&mcId=z1018096&mcName=Hyderabad%2C+IN&month=${mm}&day=${dd}&year=${yy}`
 //////////////////MEETUP SCRAPING CODE///////////////////////////
 
 //let MEETUP_DATE_RANGE_SEARCH_URL = `https://www.meetup.com/find/in--hyderabad/?eventType=online&keywords=tech&customStartDate=${sd}T13%3A30-05%3A00&customEndDate=${ed}T13%3A29-05%3A00`
@@ -132,7 +150,7 @@ function scrapeEvent(eventURL) {
       const newevent = new Event(myData);
 
       Event.findOne({ url: newevent.url }, function (err, user) {
-        console.log("hi");
+        
         if (user) { console.log("hi", user.url); return; }
 
         newevent.save((err, doc) => {
@@ -155,6 +173,22 @@ function scrapeEvent(eventURL) {
 
 
 const scrapeHistoryAndEvents = async () => {
+ /* let today = new Date();//indian time...blah blah gmt
+    let year = today.getFullYear();
+    let month = today.getMonth();
+    let date = today.getDate();
+    let  meetupURL = `https://www.meetup.com/find/events/tech/?allMeetups=false&radius=Infinity&userFreeform=Hyderabad%2C+India&mcId=z1018096&mcName=Hyderabad%2C+IN&month=${month}&day=${date}&year=${year}`
+
+    for(let i=0; i<30; i++){
+      getHistory(meetupURL);
+          let day=new Date(year, month, date + i);
+          year = day.getFullYear();
+          month= day.getMonth();
+          date = day.getDate();
+         
+          console.log(day);
+          
+    }*/
 
   getHistory();
   await delay(50000);
@@ -216,6 +250,7 @@ app.get('/events', (req, res) => {
   console.log("sort by : ",req.query.sortby);
   //Event.find({}).sort({createDate: -1}).execFind(function(err,docs){ console.log(docs)});
 
+  //check the state of filter form as well, tags and date
   Event.find({}, function (err, event) {
     let sortedEvents =[];
     if(req.query.sortby==58){
@@ -231,14 +266,16 @@ app.get('/events', (req, res) => {
 
 })
 
-
+function currentevents(story) {
+  return Date.parse(new Date(story.startDate)) >= Date.parse(new Date())
+}
 
 app.post('/search', (req, res) => {
 
 console.log("inside /search ",req.body);
 const {selectedOptionTags, dates } = req.body;
 function ondateEvents(story) {
-  console.log("hiiiii in ondate", new Date(story.startdatetime).getDate());
+ console.log("hiiiii in ondate", new Date(story.startdatetime).getDate());
   return new Date(story.startdatetime).getDate() == new Date(dates).getDate()
 }
 
@@ -260,11 +297,21 @@ else {
   
   Event.find({}, function (err, event) {
    
-    console.log("another finf no tags :",event.length);
+    console.log("another finf no tags  evet.length:",event.length);
+    console.log("another f :",req.body);
+
+
     const currEvents = event.filter(ondateEvents);
+    let sortedEvents =[];
+    if(req.body.selectedOptionSortBy.value==58){
+      console.log("insidew sortby server");
+      sortedEvents = currEvents.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    }else{
+      sortedEvents = currEvents.slice().sort((a, b) => new Date(a.startdatetime) - new Date(b.startdatetime));
+    }
     console.log("another finf no tags :",currEvents.length);
     
-    res.send(currEvents);
+    res.send(sortedEvents);
     //console.log(event.op[0]._id.getTimeStamp())
  
 
@@ -276,8 +323,11 @@ else {
 app.get('/tags', (req, res) => {
 
   Event.find().distinct('tags', function(error, tagTitles) {
-    console.log("another tagtitles :",tagTitles);
-    res.send(tagTitles);
+    console.log("all tagtitles :",tagTitles);
+    const tagTitlesFilter = tagTitles.filter((item)=>{return item != null})
+    //const fil = tagTitlesFilter.filter(currentevents);
+    console.log("all upcoming tagtitles :",tagTitlesFilter);
+    res.send(tagTitlesFilter);
     //respond with the results array
    // res.json(results);
 });

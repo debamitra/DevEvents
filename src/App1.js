@@ -3,7 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
 import './App.css';
-import Countdown from './Countdown'
+
 
 import AuthForms from './AuthForms'
 import Signup from './Signup'
@@ -48,18 +48,10 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import Select from 'react-select';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Countries = [
-  { label: "Albania", value: 355 },
-  { label: "Argentina", value: 54 },
-  { label: "Austria", value: 43 },
-  { label: "Cocos Islands", value: 61 },
-  { label: "Kuwait", value: 965 },
-  { label: "Sweden", value: 46 },
-  { label: "Venezuela", value: 58 }
-];
+
 
 
 
@@ -80,7 +72,8 @@ const styles = StyleSheet.create({
   mainBlock: {
     backgroundColor: '#F7F8FC',
     padding: 30
-  }, cardsContainer: {
+  },
+  cardsContainer: {
     marginRight: -30,
     marginTop: -30
   },
@@ -124,7 +117,7 @@ const API_ENDPOINT = 'https://hn.algolia.com/api/v1/search?query='
 
 
 
-const useSemiPersistentState = (key, initialState) => {
+/*const useSemiPersistentState = (key, initialState) => {
   const [value, setValue] = React.useState(
     localStorage.getItem(key) || initialState
   );
@@ -135,7 +128,7 @@ const useSemiPersistentState = (key, initialState) => {
   }, [value, key]);
 
   return [value, setValue];
-};
+};*/
 
 
 const storiesReducer = (state, action) => {
@@ -223,10 +216,7 @@ const App1 = () => {
     setEventList(newList);
 
   }
-  const padding = {
 
-    margin: 120
-  }
 
 
   const element = (
@@ -234,7 +224,9 @@ const App1 = () => {
     <Router>
 
       <Row className={css(styles.container)}>
-        <SidebarComponent />
+        {/*
+        <SidebarComponent />*/
+}
 
         <Column flexGrow={1} className={css(styles.mainBlock)}>
 
@@ -263,7 +255,7 @@ const App1 = () => {
                   <Signup handlePostedby={handlePostedby} /></div>
               </Route>
               <Route path="/">
-                <App eventlist={eventlist} handleChange={handleChange} />
+                <App />
               </Route>
             </Switch>
 
@@ -274,7 +266,9 @@ const App1 = () => {
         </Column>
 
 
-        <SidebarComponent />
+        {/*
+        <SidebarComponent />*/
+}
       </Row>
     </Router>
   );
@@ -285,32 +279,50 @@ const App1 = () => {
 const initialList = [];
 
 
-const App = ({ eventlist, handleChange }) => {
+const App = () => {
   //const [taglist, setTaglist] = React.useState([]);
+  const [singleTagSearch, setSingleTagSearch] = React.useState('');
   const [searchResult, setSearchResult] = React.useState(null);
   const [sortBy, setSortBy] = React.useState({ label: "upcoming events", value: 46 });
   const [searchState, setSearchState] = React.useState({
-    tagSearch: [],
-    dateSearch: ''
+    selectedOptionSortBy: { label: "upcoming events", value: 46 },
+    selectedOptionTags: null,
+    dates: new Date().toUTCString()
   });
 
 
   const [searchDate, setSearchDate] = React.useState(new Date());
   const [pastStories, setPastStories] = React.useState([]);
 
-  const [searchTerm, setSearchTerm] = useSemiPersistentState('search', '');
+  //const [searchTerm, setSearchTerm] = useSemiPersistentState('search', '');
 
-  const handleDateSearch = (newValue) => {
-    setSearchDate(newValue);
-    //setSearchTerm('');
+  /*const singleTagSearchEvents = () => {
+    console.log("state ", searchState);
+    //event.preventDefault();
+    setSearchState({ ...searchState, selectedOptionTags: singleTagSearch });
 
-  }
+    axios
+      .post('/search', { ...searchState })
+      .then(response => {
+        //setResult(response.data);
+
+        console.log("resp for singletag search in singleTagSearchEvents: ", response.data);
+
+        handleSearchResult(response.data);
+
+
+      })
+      .catch(() => {
+        //setResult({ sucess: false, message: 'something went wrong. try again' });
+      });
+
+  };*/
 
 
 
-  const [url, setUrl] = React.useState(
-    `${API_ENDPOINT}${searchTerm}`
-  );
+
+
+
 
   const [stories, dispatchStories] = React.useReducer(
     storiesReducer,
@@ -327,28 +339,28 @@ const App = ({ eventlist, handleChange }) => {
     dispatchStories({ type: 'STORIES_FETCH_INIT' });
     try {
 
-      const result = await axios.get('/events', { params: { sortby: srt } });
+      const result = await axios.post('/search',  { ...searchState });
 
       /////////////////////////////////////////////////////////
-      console.log("result", result.data);
+      console.log("stories fetch init result", result.data);
 
 
-      function searched(story) {
+      /*function searched(story) {
         return story.name.toLowerCase().includes(searchTerm.toLowerCase())
-      }
+      }*/
 
       function currentevents(story) {
         return Date.parse(new Date(story.startDate)) >= Date.parse(new Date())
       }
 
-      function ondateEvents(story) {
-        console.log("hiiiii in ondate", new Date(story.startDate).getDate());
+      /*function ondateEvents(story) {
         return new Date(story.startDate).getDate() == new Date(searchDate).getDate()
       }
 
       function pastevents(story) {
         return Date.parse(new Date(story.startDate)) < Date.parse(new Date())
       }
+      */
       let newresult = [];
 
       result.data.forEach(elem => {
@@ -366,7 +378,7 @@ const App = ({ eventlist, handleChange }) => {
       );
 
       let currEvents = [];
-      console.log("searchDate:", searchDate);
+      /*console.log("searchDate:", searchDate);
       console.log("newresult: ", newresult);
 
       if (searchDate.getDate() != new Date().getDate()) {
@@ -375,13 +387,14 @@ const App = ({ eventlist, handleChange }) => {
         console.log("searchdate currents: ", currEvents);
       }
       else {
+        */
         currEvents = newresult.filter(currentevents);
         console.log("non search date currents: ", currEvents);
 
-      }
+      //}
 
-      let searchedStories = currEvents.filter(searched);
-      console.log("searchstories:", searchedStories);
+      let searchedStories = [].concat(currEvents);
+
       console.log("searchresult", searchResult);
 
       if (searchResult != null) {
@@ -401,17 +414,17 @@ const App = ({ eventlist, handleChange }) => {
           sresult.push(temp);
         }
         );
-        
-        searchedStories= [].concat(sresult) ;
-        
-        console.log("searchedStories",searchedStories);
-        
+
+        searchedStories = [].concat(sresult);
+
+        console.log("searchedStories", searchedStories);
+
       }
 
 
 
 
-      setPastStories(newresult.filter(pastevents));
+      //setPastStories(newresult.filter(pastevents));
 
 
 
@@ -424,14 +437,14 @@ const App = ({ eventlist, handleChange }) => {
       dispatchStories({ type: 'STORIES_FETCH_FAILURE' });
     }
 
-  }, [url, searchDate, sortBy, handleSearchResult,searchResult]);
+  }, [searchDate, sortBy, searchResult]);//re create only when any of these change
 
 
 
   React.useEffect(() => {
     handleFetchStories();
 
-  }, [handleFetchStories]);
+  }, [handleFetchStories]); // run only when re-created hence whe above states change.
 
   const handleRemoveStory = item => {
     dispatchStories({
@@ -439,29 +452,9 @@ const App = ({ eventlist, handleChange }) => {
       payload: item,
     });
   }
-  const handleSearchInput = event => {
-    setSearchTerm(event.target.value);
 
-  };
 
-  const handleSearchSubmit = event => {
-    setUrl(`${API_ENDPOINT}${searchTerm}`);
-    setSearchDate(null);
 
-    event.preventDefault();
-  };
-  const customStyles = {
-    option: (provided, state) => ({
-      ...provided,
-      borderBottom: '2px dotted green',
-      color: state.isSelected ? 'yellow' : 'black',
-      backgroundColor: state.isSelected ? 'green' : 'white'
-    }),
-    control: (provided) => ({
-      ...provided,
-      marginTop: "5%",
-    })
-  }
 
   const handleSortBy = (value) => {
     console.log("inside handle sort by ", value); //{label:"trt" , value:46}
@@ -483,6 +476,16 @@ const App = ({ eventlist, handleChange }) => {
     title = "Upcoming tech events";
   else
     title = "Recently submitted tech events"
+
+
+  React.useEffect(() => {
+    //singleTagSearchEvents();
+
+  }, [singleTagSearch]);
+
+
+
+
 
 
 
@@ -511,6 +514,7 @@ const App = ({ eventlist, handleChange }) => {
             list={stories.data}
             title={title}
             onRemoveItem={handleRemoveStory}
+            setSingleTagSearch={setSingleTagSearch}
           />
 
 
@@ -529,37 +533,9 @@ const App = ({ eventlist, handleChange }) => {
   );
 };
 
-const InputWithLabel = ({
-  id,
-  value,
-  type = 'text',
-  onInputChange,
-  isFocused,
-  children,
-}) => {
-  const inputRef = React.useRef();
 
-  React.useEffect(() => {
-    if (isFocused && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isFocused]);
 
-  return (
-    <>
-      <StyledLabel htmlFor={id} className="label">{children} </StyledLabel>
-      &nbsp;
-      <StyledInput ref={inputRef}
-        id={id}
-        type={type}
-        value={value}
-        onChange={onInputChange}
-        className="input"
-      />
-    </>
 
-  );
-};
 
 
 
@@ -573,85 +549,22 @@ const PastList = ({ list, onRemoveItem }) => (
 
 
 
-const List = ({ list, title, onRemoveItem }) => (
+const List = ({ list, title, onRemoveItem, setSingleTagSearch }) => (
   <Row horizontal="space-between" className={css(styles.lastRow)}
     breakpoints={{ 1024: 'column' }}>
 
-    <TasksComponent containerStyles={styles.tasks} list={list} title={title} />
+    <TasksComponent containerStyles={styles.tasks} list={list} title={title} setSingleTagSearch={setSingleTagSearch} />
 
   </Row>)
 
-const Item = ({ item, onRemoveItem }) => (
-
-  <div className="item">
-    <div className="sub-item1">
-
-      <a href={item.url}>{item.name}</a>
-    </div>
-    <div className="sub-item2">
-      start: {new Date(item.startDate).toUTCString()}
-      <Countdown startDate={item.startDate} />
-    </div>
-
-  </div>
-
-);
-
-
-
-
-
-const SearchForm = ({
-  searchTerm,
-  onSearchInput,
-  onSearchSubmit,
-}) => (
-  <form onSubmit={onSearchSubmit} className="search-form">
-    <InputWithLabel
-      id="search"
-      value={searchTerm}
-      isFocused
-      onInputChange={onSearchInput}
-    >
-      <strong>Search:</strong>
-    </InputWithLabel>
-    <button
-      type="submit"
-      disabled={!searchTerm}
-      className={`button button-large`}
-    >
-      Submit
-    </button>
-  </form>
-);
 
 
 
 
 
 
-const StyledContainer = styled.div`
-  margin-left: 120px;
-  margin-right: 120px;
- 
- height : 100vw;
- padding: 20px;
 
- background: #f0f2f4;
- background: linear-CanvasGradient(tp ;AnimationEffect, #87CEFA, #f0f2f4);
- color: #171212;
- `;
 
-const StyledHeadlinePrimary = styled.h1`
- font-size: 48px;
- font-weight: 300;
- letter-spacing: 2px;
- `;
-const StyledItem = styled.div`
-display: flex;
-align-items: center;
-padding-bottom: 5px;
-`;
 
 const StyledColumn = styled.span`
  padding: 0 5px;
@@ -680,35 +593,6 @@ const StyledButton = styled.button`
    color: #ffffff;
  }
 `;
-
-const StyledButtonSmall = styled(StyledButton)`
-  padding: 5px;
-`;
-
-const StyledButtonLarge = styled(StyledButton)`
-  padding: 5px;
-
-  
-`;
-
-const StyledSearchForm = styled.form`
-  padding: 10px 0 20px 0;
-  display: flex;
-  align-items: center;
-`;
-
-const StyledLabel = styled.label`
-    
-    padding-left: 5px;
-    font-size: 19px;
-    `;
-
-const StyledInput = styled.input`
-    border: none;
-    border-bottom: 1px solid #171212;
-    background-color: transperant;
-    font-size: 21px;
-    `;
 
 
 

@@ -64,40 +64,40 @@ const styles = StyleSheet.create({
 });
 
 const TAGS = {
-    URGENT: {  backgroundColor: '#FEC400', color: '#FFFFFF' },
+    URGENT: { backgroundColor: '#FEC400', color: '#FFFFFF' },
     NEW: { backgroundColor: '#29CC97', color: '#FFFFFF' },
-    DEFAULT: {  backgroundColor: '#656fab', color: '#FFFFFF' },
+    DEFAULT: { backgroundColor: '#656fab', color: '#FFFFFF' },
 }
 
-class TasksComponent extends React.Component {
+const TasksComponent = ({ containerStyles, list, title, setSingleTagSearch }) => {
 
 
-    state = {
+    /*state = {
         items: [
             { title: 'My awesome tech event', checked: false, tag: TAGS.URGENT },
             { title: 'React for beginners , an introductory talk', checked: false, tag: TAGS.NEW },
             { title: 'Jims roundup of react 17', checked: true, tag: TAGS.DEFAULT }
         ]
-    };
+    };*/
 
-    renderTask = ({ name, url, startDate, endDate, postedby, tag = TAGS.URGENT,tags }, index) => {
+    const renderTask = ({ name, url, startDate, endDate, postedby, tag = TAGS.URGENT, tags }, index) => {
         const tagLabels = ['URGENT', 'NEW', 'DEFAULT'];
         console.log("render task");
         const month = new Date(startDate).getMonth();
-  
-        const tagitems = tags.map((item) => 
-        <span>
-        <Row horizontal="center" vertical="center"
-            style={{ backgroundColor:TAGS[tagLabels[Math.floor((Math.random()*3))]].backgroundColor, color:TAGS[tagLabels[Math.floor((Math.random()*3))]].color}} className={css(styles.tagStyles)}
-            onClick={() => this.onTagClick(index)}>
-            {item}
-        </Row>
-        </span>
-           
 
-);
-//console.log("tagidtems ",tagitems);
-   
+        const tagitems = tags.map((item) =>
+            <span>
+                <Row horizontal="center" vertical="center"
+                    style={{ backgroundColor: TAGS[tagLabels[Math.floor((Math.random() * 3))]].backgroundColor, color: TAGS[tagLabels[Math.floor((Math.random() * 3))]].color }} className={css(styles.tagStyles)}
+                    onClick={() => onTagClick(item)}>
+                    {item}
+                </Row>
+            </span>
+
+
+        );
+        //console.log("tagidtems ",tagitems);
+
         return (
             <Row
                 flexGrow={1} wrap
@@ -131,13 +131,13 @@ class TasksComponent extends React.Component {
                 </Column>
                 <Column>
 
-                   {/* <Row horizontal="spaced">
+                    {/* <Row horizontal="spaced">
                         {this.renderTag(text, getNextTag(), index)}
                     
                     </Row>
                     <Row horizontal="spaced">{tags}</Row>*/
-                }
-                <Row>{tagitems}</Row>
+                    }
+                    <Row>{tagitems}</Row>
 
                 </Column>
 
@@ -147,10 +147,10 @@ class TasksComponent extends React.Component {
         );
     }
 
-    renderTag = ( text, {backgroundColor, color }, index) => (
+    const renderTag = (text, { backgroundColor, color }, index) => (
         <Row horizontal="center" vertical="center"
             style={{ backgroundColor, color }} className={css(styles.tagStyles)}
-            onClick={() => this.onTagClick(index)}>
+            onClick={() => onTagClick(index)}>
             {text}
         </Row>
     );
@@ -159,59 +159,55 @@ class TasksComponent extends React.Component {
 
 
 
-    getNextTag = () => {
+    const getNextTag = () => {
         const tagLabels = ['URGENT', 'NEW', 'DEFAULT'];
-        const tagIndex = Math.floor((Math.random()*3));
-        
-        console.log("tagindex:;",tagIndex);
+        const tagIndex = Math.floor((Math.random() * 3));
+
+        console.log("tagindex:;", tagIndex);
         return TAGS[tagLabels[tagIndex]];
     }
 
-    onTagClick = (index) => this.setState(prevState => {
-        const items = prevState.items;
-        items[index].tag = this.getNextTag(items[index].tag.text);
-        return { items };
-    })
+    const onTagClick = (items) => {
 
-    onAddButtonClick = () => this.setState(prevState => {
+
+        console.log("onTagClick:prevState.items", items);
+        //items[index].tag = this.getNextTag();
+        setSingleTagSearch(items);
+
+        //return { items };
+    }
+
+
+    /*onAddButtonClick = () => this.setState(prevState => {
         const items = prevState.items;
         items.push({ title: `Task ${items.length + 1}`, checked: false, tag: this.getNextTag() });
         return { items };
     });
 
-    renderAddButton = () => (
-        <Row horizontal="center" vertical="center" className={css(styles.tagStyles, styles.addButton)} onClick={this.onAddButtonClick}>
+    const renderAddButton = () => (
+        <Row horizontal="center" vertical="center" className={css(styles.tagStyles, styles.addButton)} onClick={onAddButtonClick}>
             +
         </Row>
-    )
+    )*/
 
-    render() {
-        const { containerStyles, list , title} = this.props;
-        console.log("list: ", list);
-        let newresult = [];
-        const temp = {
-            name: "ntestame",
-            url: "testurl",
-            postedby: "postedby",
-            startDate: "startdatetime" + "",
-            endDate: "enddatetime" + ""
-        };
-        newresult.push(temp);
-        const text = newresult.concat(list);
-        console.log("text  ", text);
-        return (
 
-            <CardComponent containerStyles={this.props.containerStyles} title={title} link="" subtitle="Recent"
-                items={[
-                    /*<Row horizontal="space-between" vertical="center">
-                        <span className={css(styles.itemTitle, styles.greyTitle)}>add a tech event</span>
-                        {this.renderAddButton()}
-                    </Row>,*/
-                    ...list.map(this.renderTask)
-                ]}
-            />
-        );
-    }
+
+    console.log("list: ", list);
+    
+    
+    return (
+
+        <CardComponent containerStyles={containerStyles} title={title} link="" subtitle="Recent"
+            items={[
+                /*<Row horizontal="space-between" vertical="center">
+                    <span className={css(styles.itemTitle, styles.greyTitle)}>add a tech event</span>
+                    {this.renderAddButton()}
+                </Row>,*/
+                ...list.map(renderTask)
+            ]}
+        />
+    );
+
 }
 
 export default TasksComponent;
