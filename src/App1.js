@@ -281,7 +281,8 @@ const initialList = [];
 
 const App = () => {
   //const [taglist, setTaglist] = React.useState([]);
-  const [singleTagSearch, setSingleTagSearch] = React.useState('');
+  
+  const [singleTagSearch, setSingleTagSearch] = React.useState(null);
   const [searchResult, setSearchResult] = React.useState(null);
   const [sortBy, setSortBy] = React.useState({ label: "upcoming events", value: 46 });
   const [searchState, setSearchState] = React.useState({
@@ -296,27 +297,29 @@ const App = () => {
 
   //const [searchTerm, setSearchTerm] = useSemiPersistentState('search', '');
 
-  /*const singleTagSearchEvents = () => {
-    console.log("state ", searchState);
-    //event.preventDefault();
-    setSearchState({ ...searchState, selectedOptionTags: singleTagSearch });
+  const singleTagSearchEvents = () => {
+    console.log("singleTagSearchEvents:state ", searchState);
+    searchBySingleTag();
+    
 
+  };
+
+  const searchBySingleTag =() => {
     axios
-      .post('/search', { ...searchState })
-      .then(response => {
-        //setResult(response.data);
+    .post('/search', { ...searchState, selectedOptionTags: [].concat({value: singleTagSearch, label:singleTagSearch,color:'#0052CC' }) })
+    .then(response => {
+      //setResult(response.data);
 
-        console.log("resp for singletag search in singleTagSearchEvents: ", response.data);
+      console.log("resp for singletag search in singleTagSearchEvents: ", response.data);
 
-        handleSearchResult(response.data);
+      handleSearchResult(response.data);
 
 
-      })
-      .catch(() => {
-        //setResult({ sucess: false, message: 'something went wrong. try again' });
-      });
-
-  };*/
+    })
+    .catch(() => {
+      //setResult({ sucess: false, message: 'something went wrong. try again' });
+    });
+  }
 
 
 
@@ -479,9 +482,17 @@ const App = () => {
 
 
   React.useEffect(() => {
-    //singleTagSearchEvents();
+    console.log(",singleTagSearch",singleTagSearch);
+    if(singleTagSearch!= null){
+    const tg = [].concat({value: singleTagSearch, label:singleTagSearch,color:'#0052CC' });
+    setSearchState({...searchState, selectedOptionTags:tg} );
+    
+    singleTagSearchEvents();
+    }
 
   }, [singleTagSearch]);
+
+
 
 
 
@@ -497,7 +508,7 @@ const App = () => {
 
       </Row>
 
-      <FilterSearchComponent handleSortBy={handleSortBy} handleSearchResult={handleSearchResult} />
+      <FilterSearchComponent state={searchState} setState={setSearchState} handleSortBy={handleSortBy} handleSearchResult={handleSearchResult} />
 
 
 

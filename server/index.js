@@ -267,7 +267,8 @@ app.get('/events', (req, res) => {
 })
 
 function currentevents(story) {
-  return Date.parse(new Date(story.startDate)) >= Date.parse(new Date())
+  //console.log("hiiiii in ondate", new Date(story.startdatetime));
+  return Date.parse(new Date(story.startdatetime)) >= Date.parse(new Date())
 }
 
 app.post('/search', (req, res) => {
@@ -275,7 +276,7 @@ app.post('/search', (req, res) => {
 console.log("inside /search ",req.body);
 const {selectedOptionTags, dates } = req.body;
 function ondateEvents(story) {
- console.log("hiiiii in ondate", new Date(story.startdatetime).getDate());
+ //console.log("hiiiii in ondate", new Date(story.startdatetime).getDate());
   return new Date(story.startdatetime).getDate() == new Date(dates).getDate()
 }
 
@@ -286,7 +287,8 @@ if(selectedOptionTags != null  && selectedOptionTags.length != 0){
    
     console.log("another finf :",event);
     const fil = event.filter(ondateEvents);
-    res.send(fil);
+    const filt1 = fil.filter(currentevents);
+    res.send(filt1);
     //console.log(event.op[0]._id.getTimeStamp())
  
 
@@ -302,14 +304,16 @@ else {
 
 
     const currEvents = event.filter(ondateEvents);
+    const filt2 = currEvents.filter(currentevents);
     let sortedEvents =[];
     if(req.body.selectedOptionSortBy.value==58){
       console.log("insidew sortby server");
-      sortedEvents = currEvents.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      sortedEvents = filt2.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     }else{
-      sortedEvents = currEvents.slice().sort((a, b) => new Date(a.startdatetime) - new Date(b.startdatetime));
+      sortedEvents = filt2.slice().sort((a, b) => new Date(a.startdatetime) - new Date(b.startdatetime));
     }
-    console.log("another finf no tags :",currEvents.length);
+    console.log("anothercurrEvents.length :",currEvents.length);
+    console.log("another filt2.length :",filt2.length);
     
     res.send(sortedEvents);
     //console.log(event.op[0]._id.getTimeStamp())

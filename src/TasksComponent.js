@@ -172,7 +172,7 @@ const TasksComponent = ({ containerStyles, list, title, setSingleTagSearch }) =>
 
         console.log("onTagClick:prevState.items", items);
         //items[index].tag = this.getNextTag();
-        setSingleTagSearch(items);
+        setSingleTagSearch(items); //tag
 
         //return { items };
     }

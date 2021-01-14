@@ -42,7 +42,7 @@ const Countries = [
 
 
 
-const FilterSearchComponent = ({ handleSortBy, handleSearchResult }) => {
+const FilterSearchComponent = ({state, setState, handleSortBy, handleSearchResult }) => {
     const [result, setResult] = useState(null);
 
     const [taglist, setTaglist] = React.useState([]);
@@ -61,13 +61,13 @@ const FilterSearchComponent = ({ handleSortBy, handleSearchResult }) => {
     }, []);
 
 
-    const [state, setState] = useState(
+   /* const [state, setState] = useState(
         {
             selectedOptionSortBy: { label: "upcoming events", value: 46 },
             selectedOptionTags: null,
             dates: new Date().toUTCString()
         }
-    );
+    );*/
     const addEvent = event => {
         console.log("state ", state);
         event.preventDefault();
@@ -89,9 +89,31 @@ const FilterSearchComponent = ({ handleSortBy, handleSearchResult }) => {
 
     };
 
+    const search = () => {
+        console.log("search func state ", state);
+       
+
+        axios
+            .post('/search', { ...state })
+            .then(response => {
+                setResult(response.data);
+
+                console.log("resp: ", response.data);
+
+                handleSearchResult(response.data);
+
+
+            })
+            .catch(() => {
+                setResult({ sucess: false, message: 'something went wrong. try again' });
+            });
+
+    };
+
     React.useEffect(() => {
-        console.log("in use effect");
-        handleSortBy(state.selectedOptionSortBy);
+        console.log("in use effect",state);
+        search();
+        //handleSortBy(state.selectedOptionSortBy);
     }, [state.selectedOptionSortBy]);
 
     const handleChangeSortBy = selectedOption => {
@@ -105,12 +127,12 @@ const FilterSearchComponent = ({ handleSortBy, handleSearchResult }) => {
         console.log(`state in handle tags:`, state);
     };
 
-    const handleDateEvent = (event, picker) => {
+    /*const handleDateEvent = (event, picker) => {
         console.log("handle date event", picker.startDate.toDate().toUTCString());
         //setState({ ...state, dates: picker.startDate.toDate().toUTCString() });
         console.log(`state in handle date event:`, state);
 
-    }
+    }*/
     const handleDateCallback = (start, end, label) => {
         console.log("handle date callback", start.toDate().toUTCString());
         setState({ ...state, dates: start.toDate().toUTCString() });
@@ -164,7 +186,7 @@ const FilterSearchComponent = ({ handleSortBy, handleSearchResult }) => {
 
                             <DateRangePicker
                                 initialSettings={{ singleDatePicker: true, autoApply: true }}
-                                onEvent={handleDateEvent}
+                                //onEvent={handleDateEvent}
                                 onCallback={handleDateCallback}
                             >
 
