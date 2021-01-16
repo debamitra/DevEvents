@@ -36,6 +36,7 @@
     "react": "^16.14.0",
     "react-bootstrap": "^1.4.3",
     "react-bootstrap-daterangepicker": "^7.0.0",
+    "react-bootstrap-formik": "^1.6.2",
     "react-bootstrap-tagsinput": "^0.5.0",
     "react-bootstrap-time-picker": "^2.0.1",
     "react-bootstrap-validation": "^0.1.11",
