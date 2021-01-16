@@ -222,7 +222,7 @@ mongoose.connect(process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology
 var connection = mongoose.connection;
 
 /* submit an event*/
-app.post('/send', (req, res) => {
+app.post('/api/send', (req, res) => {
 
   const newevent = new Event(req.body);
 
@@ -246,7 +246,7 @@ app.post('/send', (req, res) => {
 })
 
 /*get events*/
-app.get('/events', (req, res) => {
+app.get('/api/events', (req, res) => {
   console.log("sort by : ",req.query.sortby);
   //Event.find({}).sort({createDate: -1}).execFind(function(err,docs){ console.log(docs)});
 
@@ -271,7 +271,7 @@ function currentevents(story) {
   return Date.parse(new Date(story.startdatetime)) >= Date.parse(new Date())
 }
 
-app.post('/search', (req, res) => {
+app.post('/api/search', (req, res) => {
 
 console.log("inside /search ",req.body);
 const {selectedOptionTags, dates } = req.body;
@@ -324,7 +324,7 @@ else {
 }
 })
 
-app.get('/tags', (req, res) => {
+app.get('/api/tags', (req, res) => {
 
   Event.find().distinct('tags', function(error, tagTitles) {
     console.log("all tagtitles :",tagTitles);
@@ -446,6 +446,13 @@ app.get('/api/profile', auth, function (req, res) {
 
   })
 });
+
+app.get(['/submit', '/login', '/signup'], (req, res) => {     
+  //console.log("path esolve",path.resolve(__dirname, '../build', 'index.html'));                  
+  res.sendFile(path.resolve(__dirname,'..', 'build', 'index.html'));                               
+});
+
+
 
 
 

@@ -306,7 +306,7 @@ const App = () => {
 
   const searchBySingleTag =() => {
     axios
-    .post('/search', { ...searchState, selectedOptionTags: [].concat({value: singleTagSearch, label:singleTagSearch,color:'#0052CC' }) })
+    .post('api/search', { ...searchState, selectedOptionTags: [].concat({value: singleTagSearch, label:singleTagSearch,color:'#0052CC' }) })
     .then(response => {
       //setResult(response.data);
 
@@ -342,7 +342,7 @@ const App = () => {
     dispatchStories({ type: 'STORIES_FETCH_INIT' });
     try {
 
-      const result = await axios.post('/search',  { ...searchState });
+      const result = await axios.post('api/search',  { ...searchState });
 
       /////////////////////////////////////////////////////////
       console.log("stories fetch init result", result.data);

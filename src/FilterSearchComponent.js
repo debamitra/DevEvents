@@ -48,7 +48,7 @@ const FilterSearchComponent = ({state, setState, handleSortBy, handleSearchResul
     const [taglist, setTaglist] = React.useState([]);
     useEffect(() => {
         const fetchData = async () => {
-            const result = await axios.get('/tags');
+            const result = await axios.get('api/tags');
             console.log("data events:", result.data);
             const newlist = result.data.map((item) => ({ value: item, label: item, color: '#0052CC' }))
             setTaglist(newlist);
@@ -73,7 +73,7 @@ const FilterSearchComponent = ({state, setState, handleSortBy, handleSearchResul
         event.preventDefault();
 
         axios
-            .post('/search', { ...state })
+            .post('api/search', { ...state })
             .then(response => {
                 setResult(response.data);
 
@@ -94,7 +94,7 @@ const FilterSearchComponent = ({state, setState, handleSortBy, handleSearchResul
        
 
         axios
-            .post('/search', { ...state })
+            .post('api/search', { ...state })
             .then(response => {
                 setResult(response.data);
 

@@ -61,7 +61,7 @@ function New() {
  
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get('/new');
+      const result = await axios.get('api/new');
       function currentevents(story) {
         return story.postedby != 'guest' && Date.parse(new Date(story.startDate)) >= Date.parse(new Date())
       }

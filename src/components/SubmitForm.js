@@ -57,7 +57,7 @@ const SubmitForm = ({ postedbyuser, handleChange }) => {
 
     event.preventDefault();
     axios
-      .post('/send', { ...state })
+      .post('api/send', { ...state })
       .then(response => {
         setResult(response.data);
         //console.log("inside sendmail profilename", profilename);
@@ -123,16 +123,18 @@ const SubmitForm = ({ postedbyuser, handleChange }) => {
 
       { redirect ? (<Redirect push to="/" />) : null}
 
-      <form onSubmit={sendEmail}>
+      <Form noValidate onSubmit={sendEmail}>
         <Form.Group controlId="name">
           <Form.Label>Name</Form.Label>
           <Form.Control
+        
             type="text"
             name="name"
             value={state.name}
             placeholder="Enter a heading"
             onChange={onInputChange}
           />
+          
         </Form.Group>
         <Form.Group controlId="url">
           <div className="formsub">
@@ -204,7 +206,7 @@ const SubmitForm = ({ postedbyuser, handleChange }) => {
           Submit
         </Button></div>
 
-      </form>
+      </Form>
     </div>
 
   );
