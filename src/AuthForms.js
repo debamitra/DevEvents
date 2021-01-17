@@ -8,6 +8,8 @@ import './reactpick.css';
 
 const AuthForms = ({ logout, handlePostedby }) => {
   const [show, setShow] = useState(false);
+
+  const [msg, setMsg] = useState(null);
  
   console.log("meees", logout);
   const [username, setUsername] = useState("");
@@ -51,8 +53,10 @@ const AuthForms = ({ logout, handlePostedby }) => {
       // store the user in localStorage
 
       localStorage.setItem('user', JSON.stringify(response.data))
-    }else
+    }else{
     setShow(true);
+    setMsg("username or password incorrect!");
+    }
 
     console.log(response.data)
   }
@@ -96,6 +100,7 @@ const AuthForms = ({ logout, handlePostedby }) => {
       setUser(null);
 
       setShow(true);
+      setMsg("username or password incorrect!");
       
 
     }
@@ -114,7 +119,7 @@ const AuthForms = ({ logout, handlePostedby }) => {
     <div>
       <div>
       </div>
-      <AlertDismissibleExample show={show} setShow={setShow} />
+      <AlertDismissibleExample show={show} setShow={setShow} msg={msg} />
 
       <Form className="align-items-center" noValidate validated={validated} onSubmit={handleSubmit}>
           <Form.Group controlId="username" >
