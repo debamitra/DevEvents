@@ -13,14 +13,23 @@ const KeyCodes = {
 
 const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
-const TagsInput =({handletags}) => {
+const TagsInput =({handletags, taglist}) => {
 
     const [state, setState] = React.useState({
         tags: [ 
            
          ],
-        suggestions
+        suggestions: []
     });
+
+    React.useEffect(()=>{
+        console.log("in use effecttags input: ", taglist);
+
+        setState({...state,
+            suggestions: taglist.map((item) => ({ id: item.value, text: item.value }))
+           });
+
+    },[]);
 
     React.useEffect(() => {
         console.log("in use effect");
@@ -65,7 +74,7 @@ const TagsInput =({handletags}) => {
     }
 
     
-        console.log("suggs",state.suggestions);
+        console.log("suggs",taglist);
         return (
             <div>
                 <ReactTags tags={state.tags}

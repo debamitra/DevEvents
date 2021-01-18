@@ -17,7 +17,7 @@ import moment from 'moment'
 
 
 
-const SubmitForm = ({ postedbyuser, handleChange }) => {
+const SubmitForm = ({ postedbyuser, handleChange, taglist }) => {
 
   const profilename = postedbyuser != "" ? postedbyuser : "guest";
   console.log("profilename", profilename);
@@ -42,6 +42,7 @@ const SubmitForm = ({ postedbyuser, handleChange }) => {
 
   });
   console.log("timezone: ", timezone);
+  console.log("in use effect submit firm: dates", taglist);
 
 
 
@@ -54,7 +55,6 @@ const SubmitForm = ({ postedbyuser, handleChange }) => {
   }
 
   React.useEffect(() => {
-    console.log("in use effect submit firm: dates", dates);
     setState({
       ...state,
       startdatetime: new Date(moment(dates.startdatetimeformatted).format()),
@@ -221,7 +221,7 @@ const SubmitForm = ({ postedbyuser, handleChange }) => {
         */
             }
 
-            <TagsInput handletags={handletags} /> <span ></span>
+            <TagsInput handletags={handletags} taglist={taglist}/> <span ></span>
 
 
 

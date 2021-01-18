@@ -96,9 +96,9 @@ const styles = StyleSheet.create({
 });
 
 
-const Submit = ({ postedbyuser, handleChange}) => (
+const Submit = ({ postedbyuser, handleChange, taglist}) => (
   <div className="container-submit">
-    <SubmitForm postedbyuser={postedbyuser} handleChange={handleChange} />
+    <SubmitForm postedbyuser={postedbyuser} handleChange={handleChange} taglist={taglist} />
 
 
 
@@ -182,10 +182,27 @@ const Logout = ({ handlePostedby }) => {
 
 
 const App1 = () => {
-  
+
+  const [taglist, setTaglist] = React.useState([]);
+  useEffect(() => {
+      const fetchData = async () => {
+          const result = await axios.get('api/tags');
+          console.log("data events:", result.data);
+          const newlist = result.data.map((item) => ({ value: item, label: item, color: '#0052CC' }))
+          setTaglist(newlist);
+          
+
+
+      };
+
+      fetchData();
+
+  }, []);
 
 
   const [postedby, setPostedby] = React.useState("");
+
+
 
   const handlePostedby = (user) => {
     setPostedby(user);
@@ -235,7 +252,7 @@ const App1 = () => {
 
             <Switch>
               <Route path="/submit">
-                <Submit postedbyuser={postedby} handleChange={handleChange} />
+                <Submit postedbyuser={postedby} handleChange={handleChange} taglist={taglist}/>
               </Route>
               <Route path="/login">
                 <div className="container-submit">
@@ -249,7 +266,7 @@ const App1 = () => {
                   <Signup handlePostedby={handlePostedby} /></div>
               </Route>
               <Route path="/">
-                <App />
+                <App taglist={taglist}/>
               </Route>
             </Switch>
 
@@ -273,8 +290,9 @@ const App1 = () => {
 const initialList = [];
 
 
-const App = () => {
+const App = ({taglist}) => {
   //const [taglist, setTaglist] = React.useState([]);
+
   
   
   const [singleTagSearch, setSingleTagSearch] = React.useState(null);
@@ -503,7 +521,7 @@ const App = () => {
 
       </Row>
 
-      <FilterSearchComponent state={searchState} setState={setSearchState} handleSortBy={handleSortBy} handleSearchResult={handleSearchResult}  />
+      <FilterSearchComponent state={searchState} setState={setSearchState} handleSortBy={handleSortBy} handleSearchResult={handleSearchResult} taglist={taglist}  />
 
 
 

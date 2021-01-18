@@ -42,24 +42,10 @@ const Countries = [
 
 
 
-const FilterSearchComponent = ({state, setState, handleSortBy, handleSearchResult }) => {
+const FilterSearchComponent = ({state, setState, handleSortBy, handleSearchResult, taglist }) => {
     const [result, setResult] = useState(null);
 
-    const [taglist, setTaglist] = React.useState([]);
-    useEffect(() => {
-        const fetchData = async () => {
-            const result = await axios.get('api/tags');
-            console.log("data events:", result.data);
-            const newlist = result.data.map((item) => ({ value: item, label: item, color: '#0052CC' }))
-            setTaglist(newlist);
-            
 
-
-        };
-
-        fetchData();
-
-    }, []);
 
 
    /* const [state, setState] = useState(
