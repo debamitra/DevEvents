@@ -13,7 +13,7 @@ const KeyCodes = {
 
 const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
-const TagsInput =({handletags, taglist}) => {
+const TagsInput =({ handletags, taglist }) => {
 
     const [state, setState] = React.useState({
         tags: [ 
@@ -22,7 +22,7 @@ const TagsInput =({handletags, taglist}) => {
         suggestions: []
     });
 
-    React.useEffect(()=>{
+    React.useEffect(() => {
         console.log("in use effecttags input: ", taglist);
 
         setState({...state,

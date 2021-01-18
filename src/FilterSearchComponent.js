@@ -121,7 +121,9 @@ const FilterSearchComponent = ({state, setState, handleSortBy, handleSearchResul
 
     }*/
     const handleDateCallback = (start, end, label) => {
-        console.log("handle date callback", start.toDate().toUTCString());
+        console.log("server timezone", start.toDate().toUTCString());
+        console.log("handle date callback", start.toDate());
+        console.log("handle date callback to ISO", start.toDate().toISOString());
         setState({ ...state, dates: start.toDate().toUTCString() });
         console.log(`state in handle date callback:`, state);
     }
