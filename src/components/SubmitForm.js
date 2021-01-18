@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Col } from 'react-bootstrap';
 import axios from 'axios';
 import styles from '../App.css';
 import DateTimePicker from 'react-datetime-picker';
@@ -10,20 +10,9 @@ import '.././submit.css';
 
 import { InputTags } from 'react-bootstrap-tagsinput'
 import 'react-bootstrap-tagsinput/dist/index.css'
+
 import TagsInput from '../TagsInput';
-
-
-
-
-
-
-
-
-
-
-
-
-
+import moment from 'moment'
 
 
 
@@ -32,6 +21,13 @@ const SubmitForm = ({ postedbyuser, handleChange }) => {
 
   const profilename = postedbyuser != "" ? postedbyuser : "guest";
   console.log("profilename", profilename);
+  const [timezone, setTimezone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone);
+  const [dates, setDates] = useState({
+
+    startdatetimeformatted: moment().format("YYYY-MM-DDTHH:mm"),
+    enddatetimeformatted: moment().format("YYYY-MM-DDTHH:mm"),
+
+  });
   const [redirect, setRedirect] = useState(false);
   const [result, setResult] = useState(null);
   const [state, setState] = useState({
@@ -41,21 +37,39 @@ const SubmitForm = ({ postedbyuser, handleChange }) => {
     postedby: profilename,
     startdatetime: new Date(),
     enddatetime: new Date(),
+
     tags: []
 
   });
+  console.log("timezone: ", timezone);
 
-  const handletags = (value) =>{
-    console.log("inside handle tags ",value);
+
+
+  const handletags = (value) => {
+    console.log("inside handle tags ", value);
     const doubled = value.map((item) => (item.text));
     setState({ ...state, tags: doubled });
 
 
   }
 
+  React.useEffect(() => {
+    console.log("in use effect submit firm: dates", dates);
+    setState({
+      ...state,
+      startdatetime: new Date(moment(dates.startdatetimeformatted).format()),
+      enddatetime: new Date(moment(dates.enddatetimeformatted).format())
+    });
+
+  }, [dates]);
+
+
+
   const sendEmail = event => {
 
     event.preventDefault();
+    console.log("in use effect submit firm: state", state);
+
     axios
       .post('api/send', { ...state })
       .then(response => {
@@ -94,68 +108,100 @@ const SubmitForm = ({ postedbyuser, handleChange }) => {
     });
   };
 
-  const onInputStartTimeChange = event => {
-    console.log("submit form ", event)
-    const value = event;
-    const name = 'startdatetime';
+  const onInputTimeChange = event => {
+    console.log("submit form ", event.target.value)
+    const value = event.target.value;
+    const name = event.target.name;
 
-    setState({
-      ...state,
+    setDates({
+      ...dates,
       [name]: value
     });
   };
 
-  const onInputEndTimeChange = event => {
-    console.log("submit form ", event)
-    const value = event;
-    const name = 'enddatetime';
 
-    setState({
-      ...state,
-      [name]: value
-    });
-  };
+
 
 
 
   return (
-    <div>
-
-      { redirect ? (<Redirect push to="/" />) : null}
-
-      <Form noValidate onSubmit={sendEmail}>
-        <Form.Group controlId="name">
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-        
-            type="text"
-            name="name"
-            value={state.name}
-            placeholder="Enter a heading"
-            onChange={onInputChange}
-          />
-          
-        </Form.Group>
-        <Form.Group controlId="url">
-          <div className="formsub">
-            <Form.Label>URL</Form.Label>
-            <Form.Control
-              type="text"
-              name="url"
-              value={state.url}
-              placeholder="Enter the url"
-              onChange={onInputChange}
-            />
+    <div style={{ marginBottom: 5 }} className="container-lg myborder">
+      <div className="col-md-6 offset-md-3">
+        <div>
+          <div>
           </div>
-        </Form.Group>
-        <Form.Group controlId="exampleForm.ControlTextarea1">
-          <Form.Label>Description</Form.Label>
-          <Form.Control as="textarea" rows={2} name="description"
-            value={state.description}
-            placeholder="Enter a description"
-            onChange={onInputChange} />
-        </Form.Group>
 
+
+          {redirect ? (<Redirect push to="/" />) : null}
+
+          <Form noValidate onSubmit={sendEmail}>
+            <Form.Row className="align-items-center">
+              <Col>
+                <Form.Group controlId="name">
+                  <Form.Label>Heading</Form.Label>
+                  <Form.Control
+
+                    type="text"
+                    name="name"
+                    value={state.name}
+                    placeholder="Enter a heading"
+                    onChange={onInputChange}
+                  />
+                </Form.Group>
+              </Col>
+            </Form.Row>
+            <Form.Row>
+              <Col>
+                <Form.Group controlId="url">
+
+                  <Form.Label>URL</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="url"
+                    value={state.url}
+                    placeholder="Enter the url"
+                    onChange={onInputChange}
+                  />
+
+                </Form.Group>
+              </Col>
+            </Form.Row>
+
+            <Form.Row>
+              <Col>
+                <Form.Group controlId="exampleForm.ControlTextarea1">
+                  <Form.Label>Description</Form.Label>
+                  <Form.Control as="textarea" rows={2} name="description"
+                    value={state.description}
+                    placeholder="Enter a description"
+                    onChange={onInputChange} />
+                </Form.Group>
+              </Col>
+            </Form.Row>
+            <Form.Row>
+              <Col>
+                <Form.Group controlId="startdatetime">
+                  <Form.Label>Start Time</Form.Label>
+                  <Form.Control type="datetime-local" name="startdatetimeformatted" placeholder="Event start time"
+                    value={dates.startdatetimeformatted}
+
+                    onChange={onInputTimeChange}
+                  />
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="enddatetime">
+                  <Form.Label>End Time</Form.Label>
+                  <Form.Control type="datetime-local" name="enddatetimeformatted" placeholder="Event end time"
+                    value={dates.enddatetimeformatted}
+                    onChange={onInputTimeChange}
+                  />
+                </Form.Group>
+              </Col>
+
+            </Form.Row>
+
+            {/*
         <Form.Label>Start time </Form.Label><span> : </span>
         <DateTimePicker
           name="startDate"
@@ -172,41 +218,25 @@ const SubmitForm = ({ postedbyuser, handleChange }) => {
 
         <div ></div>
         <Form.Label>tags </Form.Label> <span> : </span>
-        {/*<div style={{ margin: 0.5 }}>
-          <div className='input-group'>
-            <InputTags values={state.tags} onTags={(value) => setState({ ...state, tags: value.values })} />
-            <button
-              className='btn btn-outline-secondary'
-              type='button'
-              data-testid='button-clearAll'
-              onClick={() => {
-                setState({ ...state, tags: [] })
-              }}
-            >
-              Delete all
-              </button>
-          </div>
+        */
+            }
 
-          <ol>
-            {state.tags.map((item, index) => (
-              <li key={item + index}>{item}</li>
-            ))}
-          </ol>
+            <TagsInput handletags={handletags} /> <span ></span>
+
+
+
+
+
+
+
+
+            <div ><Button variant="primary" type="submit">
+              Submit
+        </Button><span ></span></div>
+
+          </Form>
         </div>
-            */}
-        <TagsInput handletags={handletags} /> <span ></span>
-        <div style={{ margin:10 }}></div>
-       
-
-
-
-
-
-        <div ><Button variant="primary" type="submit">
-          Submit
-        </Button></div>
-
-      </Form>
+      </div>
     </div>
 
   );

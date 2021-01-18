@@ -52,6 +52,7 @@ const FilterSearchComponent = ({state, setState, handleSortBy, handleSearchResul
             console.log("data events:", result.data);
             const newlist = result.data.map((item) => ({ value: item, label: item, color: '#0052CC' }))
             setTaglist(newlist);
+            
 
 
         };

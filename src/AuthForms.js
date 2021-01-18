@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Redirect } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
-import AlertDismissibleExample from './AlertDismissibleExample'
+import AlertDismissibleAuthError from './AlertDismissibleAuthError'
 import './reactpick.css';
 
 
@@ -119,7 +119,7 @@ const AuthForms = ({ logout, handlePostedby }) => {
     <div>
       <div>
       </div>
-      <AlertDismissibleExample show={show} setShow={setShow} msg={msg} />
+      <AlertDismissibleAuthError show={show} setShow={setShow} msg={msg} />
 
       <Form className="align-items-center" noValidate validated={validated} onSubmit={handleSubmit}>
           <Form.Group controlId="username" >

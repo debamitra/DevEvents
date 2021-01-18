@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
-import AlertDismissibleExample from './AlertDismissibleExample'
+import AlertDismissibleAuthError from './AlertDismissibleAuthError'
 import './reactpick.css';
 
 
@@ -99,7 +99,7 @@ const Signup = ({ handlePostedby }) => {
         <div>
           <div>
           </div>
-          <AlertDismissibleExample show={show} setShow={setShow} msg={msg} />
+          <AlertDismissibleAuthError show={show} setShow={setShow} msg={msg} />
 
           {redirect ? (<Redirect push to="/" />) : null}
 

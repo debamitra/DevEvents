@@ -13,10 +13,6 @@ import PastEventsComponent from './PastEventsComponent';
 
 import { SubmitForm } from './components/SubmitForm';
 
-import { New } from './components/New';
-
-
-
 import { Column, Row } from 'simple-flexbox';
 import { StyleSheet, css } from 'aphrodite';
 import SidebarComponent from './SidebarComponent';
@@ -100,7 +96,7 @@ const styles = StyleSheet.create({
 });
 
 
-const Submit = ({ postedbyuser, handleChange }) => (
+const Submit = ({ postedbyuser, handleChange}) => (
   <div className="container-submit">
     <SubmitForm postedbyuser={postedbyuser} handleChange={handleChange} />
 
@@ -186,6 +182,7 @@ const Logout = ({ handlePostedby }) => {
 
 
 const App1 = () => {
+  
 
 
   const [postedby, setPostedby] = React.useState("");
@@ -237,9 +234,6 @@ const App1 = () => {
 
 
             <Switch>
-              <Route path="/new">
-                <New />
-              </Route>
               <Route path="/submit">
                 <Submit postedbyuser={postedby} handleChange={handleChange} />
               </Route>
@@ -281,6 +275,7 @@ const initialList = [];
 
 const App = () => {
   //const [taglist, setTaglist] = React.useState([]);
+  
   
   const [singleTagSearch, setSingleTagSearch] = React.useState(null);
   const [searchResult, setSearchResult] = React.useState(null);
@@ -508,7 +503,7 @@ const App = () => {
 
       </Row>
 
-      <FilterSearchComponent state={searchState} setState={setSearchState} handleSortBy={handleSortBy} handleSearchResult={handleSearchResult} />
+      <FilterSearchComponent state={searchState} setState={setSearchState} handleSortBy={handleSortBy} handleSearchResult={handleSearchResult}  />
 
 
 

@@ -16,9 +16,8 @@ const delimiters = [KeyCodes.comma, KeyCodes.enter];
 const TagsInput =({handletags}) => {
 
     const [state, setState] = React.useState({
-        tags: [
-            { id: "javascript", text: "javascript" },
-            { id: "react", text: "react" }
+        tags: [ 
+           
          ],
         suggestions
     });
@@ -34,14 +33,23 @@ const TagsInput =({handletags}) => {
 
     const handleDelete = (i) => {
         const { tags } = state;
-        setState({
+        setState({...state,
          tags: tags.filter((tag, index) => index !== i),
         });
         
+        
     }
 
+    React.useEffect(() => {
+        console.log("in use effect",state);
+        
+    }, [state]);
+
     const handleAddition= (tag) => {
-        setState(state => ({ tags: [...state.tags, tag] }));
+        const temp = state.tags
+        setState({...state,
+            tags: temp.concat(tag),
+           });
         
     }
 
@@ -57,7 +65,7 @@ const TagsInput =({handletags}) => {
     }
 
     
-        console.log("suggs",state.tags);
+        console.log("suggs",state.suggestions);
         return (
             <div>
                 <ReactTags tags={state.tags}

@@ -2,7 +2,7 @@
 
 .container {
     margin: auto;
-    width: 50%;
+    width: 100%;
 }
 .ReactTags__tags {
     position: relative;
@@ -10,15 +10,15 @@
 
 /* Styles for the input */
 .ReactTags__tagInput {
-    width: 200px;
+    width: 400px;
     border-radius: 2px;
     display: inline-block;
 }
 .ReactTags__tagInput input.ReactTags__tagInputField,
 .ReactTags__tagInput input.ReactTags__tagInputField:focus {
-    height: 31px;
+    height: 38px;
     margin: 0;
-    font-size: 12px;
+    font-size: 16px;
     width: 100%;
     border: 1px solid #eee;
 }
@@ -27,14 +27,14 @@
 .ReactTags__selected span.ReactTags__tag {
     border: 1px solid #ddd;
     background: #eee;
-    font-size: 12px;
+    font-size: 16px;
     display: inline-block;
     padding: 5px;
     margin: 0 5px;
     border-radius: 2px;
 }
 .ReactTags__selected a.ReactTags__remove {
-    color: #aaa;
+    color: rgb(28, 207, 177);
     margin-left: 5px;
     cursor: pointer;
 }

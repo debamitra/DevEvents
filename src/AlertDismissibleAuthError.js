@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from "react";
 
 import {Alert, Button} from 'react-bootstrap';
-const AlertDismissibleExample = ({show, setShow, msg}) => {
-    //const [show, setShow] = useState(true);
-  
+
+
+const AlertDismissibleAuthError = ({show, setShow, msg}) => {
+    
     if (show) {
       console.log("alert adm:",msg);
       return (
@@ -19,6 +20,6 @@ const AlertDismissibleExample = ({show, setShow, msg}) => {
     return <div></div>;
   }
 
-  export default AlertDismissibleExample;
+  export default AlertDismissibleAuthError;
   
   
