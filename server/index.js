@@ -208,7 +208,7 @@ var CronJob = require('cron').CronJob;
 var job = new CronJob('0 */10 * * * *', scrapeHistoryAndEvents
   , null, true, 'America/Los_Angeles');
   console.log("cron job");
-job.start();
+//job.start();
 
 
 /////////////////////////////////////////////////////////////
@@ -276,7 +276,7 @@ app.post('/api/search', (req, res) => {
 console.log("inside /search ",req.body);
 const {selectedOptionTags, dates } = req.body;
 function ondateEvents(story) {
- //console.log("hiiiii in ondate", new Date(story.startdatetime).getDate());
+ console.log("hiiiii in ondate", new Date(story.startdatetime).getDate());
   return new Date(story.startdatetime).getDate() == new Date(dates).getDate()
 }
 
