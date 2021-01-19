@@ -15,6 +15,7 @@ const cheerio = require('cheerio');
 const axios = require("axios");
 
 const app = express();
+const moment = require('moment-timezone');
 
 
 
@@ -274,10 +275,14 @@ function currentevents(story) {
 app.post('/api/search', (req, res) => {
 
 console.log("inside /search ",req.body);
-const {selectedOptionTags, dates } = req.body;
+const {selectedOptionTags, dates,timezone } = req.body;
+console.log("timezone in index.js:",timezone);
+
 function ondateEvents(story) {
- console.log("hiiiii in ondate", new Date(story.startdatetime).getDate());
-  return new Date(story.startdatetime).getDate() == new Date(dates).getDate()
+  console.log("timezone in index.js:",moment(story.startdatetime).tz(timezone).format('DD'));
+console.log("timezone in index.js:",moment(story.startdatetime).tz(timezone).format());
+
+  return moment(story.startdatetime).tz(timezone).format('DD') === moment(dates).tz(timezone).format('DD')
 }
 
 if(selectedOptionTags != null  && selectedOptionTags.length != 0){

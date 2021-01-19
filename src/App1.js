@@ -301,7 +301,8 @@ const App = ({taglist}) => {
   const [searchState, setSearchState] = React.useState({
     selectedOptionSortBy: { label: "upcoming events", value: 46 },
     selectedOptionTags: null,
-    dates: new Date().toUTCString()
+    dates: new Date().toUTCString(),
+    timezone : Intl.DateTimeFormat().resolvedOptions().timeZone
   });
 
 
