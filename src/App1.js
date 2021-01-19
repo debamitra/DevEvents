@@ -97,8 +97,11 @@ const styles = StyleSheet.create({
 
 
 const Submit = ({ postedbyuser, handleChange, taglist}) => (
+  <div className="container-submit">
   
     <SubmitForm postedbyuser={postedbyuser} handleChange={handleChange} taglist={taglist} />
+
+    </div>
 
 )
 
