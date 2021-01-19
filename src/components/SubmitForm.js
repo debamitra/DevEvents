@@ -5,7 +5,7 @@ import axios from 'axios';
 import styles from '../App.css';
 import DateTimePicker from 'react-datetime-picker';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '.././submit.css';
+//import '.././submit.css';
 
 
 import { InputTags } from 'react-bootstrap-tagsinput'

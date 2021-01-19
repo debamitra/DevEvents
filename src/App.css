@@ -130,7 +130,7 @@ a:hover {
 #element-align {
   position: absolute;
   bottom: 0;
-  min-height: 2.5rem;
+  min-height: 3.5rem;
   
   overflow: auto;
 }
