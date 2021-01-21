@@ -149,10 +149,10 @@ const FilterSearchComponent = ({state, setState, handleSortBy, handleSearchResul
             <Form onSubmit={addEvent}>
                 <Container fluid={"sm"} >
                     <Row >
-                        Sort by : 
+                        <Col>Sort by : </Col>
                         <Col className="with-margin" xs={12} md={3}>
                             <Select placeholder="Sort by:" options={[{ label: "upcoming events", value: 46 },
-                            { label: "recently submitted events", value: 58 }]}
+                            { label: "recently submitted events", value: 58 ,isDisabled: true}]}
                                 value={state.selectedOptionSortBy}
                                 onChange={handleChangeSortBy}
                             />
