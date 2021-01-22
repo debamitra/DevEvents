@@ -52,14 +52,20 @@ function Countdown({startDate}) {
 
 Object.keys(timeLeft).forEach((interval) => {
   if (!timeLeft[interval]) {
-    return;
+    timerComponents.push(
+      <span>
+        {"0"} {interval}{" "}
+      </span>
+    );
+    //return;
   }
+  else{
 
   timerComponents.push(
     <span>
       {timeLeft[interval]} {interval}{" "}
     </span>
-  );
+  );}
 });
 
 return (

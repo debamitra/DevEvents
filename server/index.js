@@ -170,7 +170,7 @@ const scrapeHistoryAndEvents = async () => {
 
     let meetupURL = `https://www.meetup.com/find/events/tech/?allMeetups=false&radius=Infinity&userFreeform=Hyderabad%2C+India&mcId=z1018096&mcName=Hyderabad%2C+IN&month=${month}&day=${date}&year=${year}`
     getHistory(meetupURL);
-    await delay(50000)
+    await delay(100000)
     console.log("rl", meetupURL);
     let day = new Date(year, month, date + 1);
     year = day.getFullYear();
@@ -186,7 +186,7 @@ const scrapeHistoryAndEvents = async () => {
 ///////////run cron job for scraping//////////////////////////
 
 var CronJob = require('cron').CronJob;
-var job = new CronJob('0 */30 * * * *', scrapeHistoryAndEvents
+var job = new CronJob('0 */50 * * * *', scrapeHistoryAndEvents
   , null, true, 'America/Los_Angeles');
 console.log("cron job");
 job.start();

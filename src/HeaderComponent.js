@@ -81,8 +81,10 @@ function HeaderComponent(props) {
         if (isLoggedIn) {
           console.log("inside isloggedin: ", postedby);
           return (
+            [<Link style={{padding: 20}} to="/submit">submit</Link> , <div className={css(styles.separator)}></div>,
+            <Link style={{padding: 20}} to="/logout">logout</Link> ]
             
-            <Link style={{padding: 20}} to="/logout">logout</Link>
+            
             
     
           );
