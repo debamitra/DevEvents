@@ -55,6 +55,7 @@
     "react-scripts": "3.4.3",
     "react-select": "^3.1.1",
     "react-tag-input": "^6.5.2",
+    "react-time-ago": "^6.2.2",
     "react-time-picker": "^4.0.1",
     "reactstrap": "^8.8.1",
     "simple-flexbox": "^2.3.2",
