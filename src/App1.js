@@ -381,11 +381,12 @@ const App = ({taglist}) => {
       let newresult = [];
 
       result.data.forEach(elem => {
-        const { name, url, startdatetime, enddatetime, postedby, tags } = elem;
+        const { name, url, startdatetime, enddatetime, postedby, tags, createdAt } = elem;
         const temp = {
           name: name,
           url: url,
           postedby: postedby,
+          when: createdAt ,
           startDate: startdatetime + "",
           endDate: enddatetime + "",
           tags: tags
@@ -419,14 +420,15 @@ const App = ({taglist}) => {
         let sresult = [];
 
         searchResult.forEach(elem => {
-          const { name, url, startdatetime, enddatetime, postedby, tags } = elem;
+          const { name, url, startdatetime, enddatetime, postedby, tags,createdAt } = elem;
           const temp = {
             name: name,
             url: url,
             postedby: postedby,
             startDate: startdatetime + "",
             endDate: enddatetime + "",
-            tags: tags
+            tags: tags,
+            when: createdAt
           };
           sresult.push(temp);
         }

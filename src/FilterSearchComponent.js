@@ -97,11 +97,11 @@ const FilterSearchComponent = ({state, setState, handleSortBy, handleSearchResul
 
     };
 
-    React.useEffect(() => {
+    /*React.useEffect(() => {
         console.log("in use effect",state);
         search();
         //handleSortBy(state.selectedOptionSortBy);
-    }, [state.selectedOptionSortBy]);
+    }, [state.selectedOptionSortBy]);*/
 
     const handleChangeSortBy = selectedOption => {
         setState({ ...state, selectedOptionSortBy: selectedOption });

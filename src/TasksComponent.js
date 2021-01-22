@@ -4,6 +4,7 @@ import { StyleSheet, css } from 'aphrodite/no-important';
 import CardComponent from './CardComponent';
 import MiniCardComponent from './MiniCardComponent';
 import Countdown from './Countdown';
+import ReactTimeAgo from 'react-time-ago'
 
 
 const styles = StyleSheet.create({
@@ -80,9 +81,9 @@ const TasksComponent = ({ containerStyles, list, title, setSingleTagSearch }) =>
         ]
     };*/
 
-    const renderTask = ({ name, url, startDate, endDate, postedby, tag = TAGS.URGENT, tags }, index) => {
+    const renderTask = ({ name, url, startDate, endDate,  postedby, when, stag = TAGS.URGENT, tags }, index) => {
         const tagLabels = ['URGENT', 'NEW', 'DEFAULT'];
-        console.log("render task");
+        //console.log("render task:", when);
         const month = new Date(startDate).getMonth();
 
         const tagitems = tags.map((item) =>
@@ -116,6 +117,7 @@ const TasksComponent = ({ containerStyles, list, title, setSingleTagSearch }) =>
                 >
                     <MiniCardComponent className={css(styles.miniCardContainer)} title={month} value={new Date(startDate).getDate()} day={new Date(startDate).getDay()} />
                 </Column>
+                
                 <Column
                     breakpoints={{ 900: {} }}
                 //flexGrow={1}
@@ -124,7 +126,9 @@ const TasksComponent = ({ containerStyles, list, title, setSingleTagSearch }) =>
                     <span className={css(styles.itemTitle)}><a href={url}>{name}</a></span>
 
 
-                    <span className={css(styles.subtitle)}>online | posted by {postedby}  </span>
+                    <span className={css(styles.subtitle)}>online | posted by {postedby} <ReactTimeAgo date={new Date(when)} locale="en-US"/>  </span>
+                    
+
 
                     <Countdown startDate={startDate} />
 
@@ -192,7 +196,7 @@ const TasksComponent = ({ containerStyles, list, title, setSingleTagSearch }) =>
 
 
 
-    console.log("list: ", list);
+    console.log("list in task component: ", list);
     
     
     return (
