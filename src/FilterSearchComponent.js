@@ -27,6 +27,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
+import 'moment/locale/it.js';
+import { DatePicker, DatePickerInput } from 'rc-datepicker';
+import 'rc-datepicker/lib/style.css';
+
+const date = new Date(); // or Date or Moment.js
+
 
 
 const searchtags = [
@@ -42,19 +48,31 @@ const Countries = [
 
 
 
-const FilterSearchComponent = ({state, setState, handleSortBy, handleSearchResult, taglist }) => {
+const FilterSearchComponent = ({ state, setState, handleSortBy, handleSearchResult, taglist }) => {
     const [result, setResult] = useState(null);
 
+    const onChange = (jsDate, dateString) => {
+        // ...
+        console.log("datesrtrinf:",dateString);
+        setState({ ...state, dates: new Date(dateString).toUTCString() });
+
+      }
+
+    const onClear = () => {
+        console.log("clar")
+        setState({ ...state, dates: null });
+    }
 
 
 
-   /* const [state, setState] = useState(
-        {
-            selectedOptionSortBy: { label: "upcoming events", value: 46 },
-            selectedOptionTags: null,
-            dates: new Date().toUTCString()
-        }
-    );*/
+
+    /* const [state, setState] = useState(
+         {
+             selectedOptionSortBy: { label: "upcoming events", value: 46 },
+             selectedOptionTags: null,
+             dates: new Date().toUTCString()
+         }
+     );*/
     const addEvent = event => {
         console.log("state ", state);
         event.preventDefault();
@@ -78,7 +96,7 @@ const FilterSearchComponent = ({state, setState, handleSortBy, handleSearchResul
 
     const search = () => {
         console.log("search func state ", state);
-       
+
 
         axios
             .post('api/search', { ...state })
@@ -152,7 +170,7 @@ const FilterSearchComponent = ({state, setState, handleSortBy, handleSearchResul
                         <Col>Sort by : </Col>
                         <Col className="with-margin" xs={12} md={3}>
                             <Select placeholder="Sort by:" options={[{ label: "upcoming events", value: 46 },
-                            { label: "recently submitted events", value: 58 ,isDisabled: true}]}
+                            { label: "recently submitted events", value: 58, isDisabled: true }]}
                                 value={state.selectedOptionSortBy}
                                 onChange={handleChangeSortBy}
                             />
@@ -173,7 +191,7 @@ const FilterSearchComponent = ({state, setState, handleSortBy, handleSearchResul
 
                         <Col className="with-margin" xs={12} md={3}>
 
-                            <DateRangePicker
+                            {/*<DateRangePicker
                                 initialSettings={{ singleDatePicker: true, autoApply: true }}
                                 //onEvent={handleDateEvent}
                                 onCallback={handleDateCallback}
@@ -182,8 +200,21 @@ const FilterSearchComponent = ({state, setState, handleSortBy, handleSearchResul
                                 <input type="text" className="form-control" />
 
                             </DateRangePicker>
+                            */}
+                            <DatePickerInput
+                                onChange={onChange}
+                                value={state.dates}
+                                className='my-react-component'
+                                showOnInputClick
+                                placeholder='Pick a date to search..'
+                                locale='en'
+                                iconClassName='calendar icon'
+                                onClear={onClear}
+                               
+                            />
 
                         </Col>
+                        
                         {/*
                             <DateRangePicker
                                 initialSettings={{ 

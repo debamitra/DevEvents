@@ -4,6 +4,7 @@ import './index.css';
 import App1 from './App1';
 import * as serviceWorker from './serviceWorker';
 import TimeAgo from 'javascript-time-ago'
+import ScrollToTop from './ScrollToTop'
 
 import en from 'javascript-time-ago/locale/en'
 import ru from 'javascript-time-ago/locale/ru'
@@ -15,6 +16,8 @@ TimeAgo.addLocale(ru)
 ReactDOM.render(
   <React.StrictMode>
     <App1/>
+    <ScrollToTop 
+            />
   </React.StrictMode>,
   document.getElementById('root')
 );

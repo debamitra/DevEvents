@@ -267,13 +267,19 @@ app.post('/api/search', (req, res) => {
       (moment(story.startdatetime).tz(timezone).format('DD') === moment(dates).tz(timezone).format('DD')));
   }
 
+  
+
   if (selectedOptionTags != null && selectedOptionTags.length != 0) {
     const findtags = selectedOptionTags.map((item) => (item.value))
 
     Event.find({ tags: { $all: findtags } }, function (err, event) {
 
       console.log("another finf :", event);
-      const fil = event.filter(ondateEvents);
+      let fil = [];
+      if(dates != null)
+         fil = event.filter(ondateEvents);
+      else 
+        fil = [].concat(event);
       const filt1 = fil.filter(currentevents);
       res.send(filt1);
       //console.log(event.op[0]._id.getTimeStamp())
@@ -289,8 +295,11 @@ app.post('/api/search', (req, res) => {
       console.log("another finf no tags  evet.length:", event.length);
       console.log("another f :", req.body);
 
-
-      const currEvents = event.filter(ondateEvents);
+      let currEvents = [];
+      if(dates != null)
+        currEvents = event.filter(ondateEvents);
+      else 
+      currEvents = [].concat(event);
       const filt2 = currEvents.filter(currentevents);
       let sortedEvents = [];
       if (req.body.selectedOptionSortBy.value == 58) {

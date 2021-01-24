@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
 import './App.css';
 
+import ScrollToTop from './ScrollToTop';
+
 
 import AuthForms from './AuthForms'
 import Signup from './Signup'
@@ -46,6 +48,7 @@ import {
 } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 
 
@@ -271,8 +274,10 @@ const App1 = () => {
             </Switch>
 
           </div>
+          
           <div id="element-align">
             <i>Meetup discovery app 2020</i>
+            
           </div>
         </Column>
 
@@ -282,6 +287,7 @@ const App1 = () => {
 }
       </Row>
     </Router>
+    
   );
   return element;
 }
