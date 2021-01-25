@@ -2,6 +2,18 @@ import React from 'react';
 import { Column, Row } from 'simple-flexbox';
 import { StyleSheet, css } from 'aphrodite/no-important';
 import MiniCardComponent from './MiniCardComponent';
+import ContentLoader, { Facebook } from "react-content-loader";
+
+
+const MyLoader = () => (
+    <ContentLoader>
+      <rect x="0" y="0" rx="5" ry="5" width="70" height="70" />
+      <rect x="80" y="10" rx="4" ry="4" width="600" height="13" />
+      <rect x="80" y="30" rx="3" ry="3" width="300" height="10" />
+      <rect x="80" y="55" rx="3" ry="3" width="400" height="10" />
+  
+    </ContentLoader>
+  );
 
 const styles = StyleSheet.create({
     container: {
@@ -88,7 +100,8 @@ class CardComponent extends React.Component {
     }
 
     render() {
-        const { title, link, subtitle, items, containerStyles } = this.props;
+        const { title, link, subtitle, items, containerStyles, isLoading } = this.props;
+        const placeholderItems = [<MyLoader /> , <MyLoader/>, <MyLoader />, <MyLoader />];
         return (
             <Column flexGrow={1} className={css(styles.container, containerStyles)} breakpoints={{ 426: css(styles.containerMobile) }}>
                 <Row horizontal="space-between">
@@ -102,7 +115,15 @@ class CardComponent extends React.Component {
                     </Column>
                     <span className={css(styles.link)}>{link}</span>
                 </Row>
-                {items.map(this.renderItem)}
+                    {isLoading ? (
+                        placeholderItems.map(this.renderItem)
+        
+                    ) : (
+
+                        items.map(this.renderItem)
+                 )}
+
+                
             </Column>
         );
     }

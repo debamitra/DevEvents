@@ -70,7 +70,7 @@ const TAGS = {
     DEFAULT: { backgroundColor: '#656fab', color: '#FFFFFF' },
 }
 
-const TasksComponent = ({ containerStyles, list, title, setSingleTagSearch }) => {
+const TasksComponent = ({ containerStyles, list, title, setSingleTagSearch, isLoading }) => {
 
 
     /*state = {
@@ -201,14 +201,14 @@ const TasksComponent = ({ containerStyles, list, title, setSingleTagSearch }) =>
     
     return (
 
-        <CardComponent containerStyles={containerStyles} title={title} link="" subtitle="Recent"
+        <CardComponent containerStyles={containerStyles} title={title} link="" subtitle="Recent" isLoading={isLoading}
             items={[
                 /*<Row horizontal="space-between" vertical="center">
                     <span className={css(styles.itemTitle, styles.greyTitle)}>add a tech event</span>
                     {this.renderAddButton()}
                 </Row>,*/
                 ...list.map(renderTask)
-            ]}
+            ]} 
         />
     );
 

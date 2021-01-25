@@ -60,6 +60,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
+
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
@@ -107,6 +108,8 @@ const Submit = ({ postedbyuser, handleChange, taglist}) => (
     </div>
 
 )
+
+
 
 
 
@@ -361,8 +364,10 @@ const App = ({taglist}) => {
 
     dispatchStories({ type: 'STORIES_FETCH_INIT' });
     try {
+      console.log("tartpost api/search:",Date.now());
 
       const result = await axios.post('api/search',  { ...searchState });
+      console.log("end time api/search:",Date.now());
 
       /////////////////////////////////////////////////////////
       console.log("stories fetch init result", result.data);
@@ -538,9 +543,15 @@ const App = ({taglist}) => {
       </h1>
 
       {stories.isError && <p>Something went wrong ...</p>}
-      {stories.isLoading ? (
-        <p>Loading ...</p>
-      ) : (
+      {/*stories.isLoading ? (
+        
+        
+          <p>Loading ...</p>
+        
+
+     
+       
+      ) : (*/
 
 
           <List
@@ -548,10 +559,12 @@ const App = ({taglist}) => {
             title={title}
             onRemoveItem={handleRemoveStory}
             setSingleTagSearch={setSingleTagSearch}
+            isLoading={stories.isLoading}
           />
 
 
-        )}
+       // )
+      }
 
 
 
@@ -582,11 +595,11 @@ const PastList = ({ list, onRemoveItem }) => (
 
 
 
-const List = ({ list, title, onRemoveItem, setSingleTagSearch }) => (
+const List = ({ list, title, onRemoveItem, setSingleTagSearch, isLoading }) => (
   <Row horizontal="space-between" className={css(styles.lastRow)}
     breakpoints={{ 1024: 'column' }}>
 
-    <TasksComponent containerStyles={styles.tasks} list={list} title={title} setSingleTagSearch={setSingleTagSearch} />
+    <TasksComponent containerStyles={styles.tasks} list={list} title={title} setSingleTagSearch={setSingleTagSearch} isLoading={isLoading} />
 
   </Row>)
 
