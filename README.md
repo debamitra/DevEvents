@@ -2,7 +2,7 @@
  People can use this app to discover technology-centered events happening online in the near future.
  This webapp is a side/practice project to learn react and build an app end to end.
 
-Deployed here : https://discover-tech-meets-app.herokuapp.com/
+Deployed here : https://hackerevents.herokuapp.com/
 
 ## Tech Stack :
   * MongoDB
