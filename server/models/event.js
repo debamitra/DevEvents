@@ -1,4 +1,5 @@
 var mongoose=require('mongoose');
+const { boolean } = require('yup');
 
 
 
@@ -29,7 +30,9 @@ const eventSchema=mongoose.Schema({
     },
     tags:{
         type: [String], index: true
-    }
+    },
+
+   
 }, { timestamps: true } )  ;
 
 

@@ -28,22 +28,6 @@ app.use(bodyparser.json());
 app.use(cookieParser());
 
 
-function next30days() {
-  let today = new Date();//indian time...blah blah gmt
-  let year = today.getFullYear();
-  let month = today.getMonth();
-  let date = today.getDate();
-  for (let i = 0; i < 30; i++) {
-    let day = new Date(year, month, date + i);
-    year = day.getFullYear();
-    month = day.getMonth();
-    date = day.getDate();
-    console.log(day);
-
-  }
-
-}
-
 //let  meetupURL = `https://www.meetup.com/find/events/tech/?allMeetups=false&radius=Infinity&userFreeform=Hyderabad%2C+India&mcId=z1018096&mcName=Hyderabad%2C+IN&month=${mm}&day=${dd}&year=${yy}`
 //////////////////MEETUP SCRAPING CODE///////////////////////////
 
@@ -69,15 +53,26 @@ async function getHistory(MEETUP_SEARCH_URL) {
   let links = [];
 
   await axios
-    .get(MEETUP_SEARCH_URL)
+    .get(MEETUP_SEARCH_URL, {
+      headers: {
+        'cookie': 'MEETUP_BROWSER_ID="id=1dce1aad-d3aa-453f-9686-05840e1e356e"; _ga=GA1.2.1178743466.1592578653; __ssid=9fa9b63ff6e2c523eca814e8e1bbfd4; fbm_2403839689=base_domain=.meetup.com; MEETUP_TRACK="id=c9200ef0-cf01-417c-93b4-eb3cd6942241&l=1&s=03082a2004f532feb141118bb423511178735d35"; __stripe_mid=ef29f614-b94b-4b01-ab6b-8d079acac51138e7c3; MEETUP_MEMBER=id=130093842&status=1&timestamp=1613483757&bs=0&tz=Asia/Calcutta&zip=meetup7&country=in&city=Hyderabad&state=&lat=17.4&lon=78.48&ql=false&s=ce58b9e07b003abef65676955d6918e69053a743&scope=ALL; memberId=130093842; gaEncryptedMemberId=9691bb11b4e9fa18f0f018f5b5527f08; MEETUP_LANGUAGE=language=en&country=US; MEETUP_SEGMENT=member; SIFT_SESSION_ID=f1e5821a-fef1-4e28-8d5b-d88454426ae1; MEETUP_CSRF=33694f17-1740-4a6e-82c1-4fd3ef2f74c6; MUP_jqueryEn=on; appbanner_accepted=dismissed=0; MEETUP_GA=gj=sj7ea%2Csj7ealla%2Csj7ea%2Csj7ea%2Csj7ea&rv=fe1a%2Cfe1alla%2Cfe1a%2Cfe1a%2Cfe1a&id=null; MEETUP_FB_DONE=1; x-mwp-csrf=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiMzQ3MDk0YmYtY2Y1NS00NDZlLTk3ZDMtZjQ2YTgzNzBlYTVjIiwidHlwZSI6ImNvb2tpZSIsImlhdCI6MTYyMjgwMTI4M30.q5wgEpl5_TjqrVIbqam776o-1xLdrtMfPdCJ9PL2OtQ; x-mwp-csrf-header=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiMzQ3MDk0YmYtY2Y1NS00NDZlLTk3ZDMtZjQ2YTgzNzBlYTVjIiwidHlwZSI6ImhlYWRlciIsImlhdCI6MTYyMjgwMTI4M30.p7xNDawyd7hBzQwWjVZTHhQJxOv6nSTUpqzFYL23DgU; fbsr_2403839689=yvuu3lJFPzfyMZtzrFOZC8pDb47doi-WstgxMndwts4.eyJ1c2VyX2lkIjoiNzEyODYzNzg2IiwiY29kZSI6IkFRRFE3ZmxyRHd5c1lzcF9QNDZ3dDExZmlkM0tLRUc1QWd0ekZIMUVvaHVyMHZuTHhCRkNZMWtQcjVKU0Z5cld2QkRIVElkTXBVbDJGOFpXMXM2ZVZyelp0ZzNxYkplU0RtMjRHVFF2QWRsaTViYjNQRDh0dVJVcW4zQUI5LWUxT2dXMmJIZUwxYWthVUdaNTJRT1dzNnJxaFdmNXdsTTNPZm5mWGcxNVZfYndhOVAzR2ZxS1VfVkkyZmdaNVNRRVE2bTVyY21kOW9BVmY5aTJNZFhnVGRsWFFSNU1KeEg0dlgwVnRKcnZxZm04STJjVW5qeVlRNjExbmxwN0g2dnFCUnQzM2NmVUJTOU1wRXExWEJBTkU3UGp6d21taUF2OHRPLU5WWE1WSE53b0FOV1U1S0Z1MWhjenJlRWMtaFp0UUdVZW56ZGdFaVhOUzJqanJLRmhsYkI3cll2SmJGSlYxSTBWbjVZTHZaT3loZyIsIm9hdXRoX3Rva2VuIjoiRUFBQUFBSTlIcnNrQkFIYXlQQWJCRjluUnRMZnJsdUxMN2ZwTWN1U0tLbk9BcGs1M3R1UzBtZG5EdkprU1NlTVRNaW1rdlNaQU9OT1IxVDgwR3VublZwV1BCRmVhNFZhdG45U3NNQ1NmdDdVRWZyd1pBZmU1ZDJBWkE1S1pDaVlnaXI1bEg5dzNUWEJpbFpCZDRZN1BmWkN1VzVvblpCeDNvYklkS24xZ1RwekFBWkRaRCIsImFsZ29yaXRobSI6IkhNQUMtU0hBMjU2IiwiaXNzdWVkX2F0IjoxNjIyODAxMzEyfQ; click-track={"history":[{"lineage":"div.dropdown.callout<#searchForm<div<#findNavBar<div<#C_pagePreBody<#C_page","linkText":"All groups Groups your friends have joined Arts Beliefs Book Clubs Career & Business Dance Family Fashion & Beauty Film Food & Drink Health & Wellness Hobbies & Crafts LGBTQ Language & Culture Learning Movements Music Outdoors & Adventure Pets Photography Sci-Fi & Games Social Sports & Fitness Tech Writing","coords":[-468,223],"data":{}},{"lineage":"li.simple-view-selector-li<#simple-view-selector<div<#findNavBar<div<#C_pagePreBody<#C_page","linkText":"Calendar","coords":[344,224],"data":{}},{"lineage":"li.simple-view-selector-li<#simple-view-selector<div<#findNavBar<div<#C_pagePreBody<#C_page","linkText":"Groups","coords":[222,224],"data":{}},{"lineage":"li.simple-view-selector-li<#simple-view-selector<div<#findNavBar<div<#C_pagePreBody<#C_page","linkText":"Calendar","coords":[344,224],"data":{}}]}',
+        'path' : '/find/events/?allMeetups=false&keywords=tech&radius=100&userFreeform=Hyderabad,+India&mcId=z1018096&mcName=Hyderabad,+IN&eventFilter=mysugg'
+      }
+    })
     .then(response => {
       // Load the web page source code into a cheerio instance
+      //console.log("Scraping EventIDs from Meetup", response.data);
       const $ = cheerio.load(response.data);
-      console.log("Scraping EventIDs from Meetup");
+      //console.log("Scraping EventIDs from Meetup");
       $("a").each((index, value) => {
+        //console.log("value=",value);
+
         var link = $(value).attr("href");
 
+
+
         if (/\/[0-9]+\//.test(link)) {
+          console.log("Scraping link: ", link);
           if (!mySet.has(link)) {
             mySet.add(link);
             scrapeEvent(link)
@@ -86,6 +81,7 @@ async function getHistory(MEETUP_SEARCH_URL) {
           //links.push(link);
 
         }
+        console.log("evntcount: ", eventCount);
 
         eventCount++;
 
@@ -105,14 +101,16 @@ function scrapeEvent(eventURL) {
 
   axios.get(eventURL).then(response => {
 
+
     const $ = cheerio.load(response.data);
     const attendee = $('h3').children('span').text();
     const scriptJSON = $('script[type="application/ld+json"]').html();
-    //console.log("scriptjson: ",scriptJSON);
+
     const jsonObj = JSON.parse(scriptJSON);
+    //console.log("scriptjson: ",jsonObj);
     if (jsonObj !== null && jsonObj.location !== undefined && jsonObj.location.url !== undefined) {
       //if(isEnglish(encodeURI(jsonObj.name)))
-      //console.log("event data: ",jsonObj);
+      console.log("event data: ", jsonObj);
       getList(jsonObj.name);
 
       var numb = attendee.match(/\d/g);
@@ -171,7 +169,7 @@ const scrapeHistoryAndEvents = async () => {
     let meetupURL = `https://www.meetup.com/find/events/tech/?allMeetups=false&radius=Infinity&userFreeform=Hyderabad%2C+India&mcId=z1018096&mcName=Hyderabad%2C+IN&month=${month}&day=${date}&year=${year}`
     getHistory(meetupURL);
     await delay(100000)
-    console.log("rl", meetupURL);
+    //console.log("rl", meetupURL);
     let day = new Date(year, month, date + 1);
     year = day.getFullYear();
     month = day.getMonth();
@@ -186,7 +184,7 @@ const scrapeHistoryAndEvents = async () => {
 ///////////run cron job for scraping//////////////////////////
 
 var CronJob = require('cron').CronJob;
-var job = new CronJob('0 */50 * * * *', scrapeHistoryAndEvents
+var job = new CronJob('0 */2 * * * *', scrapeHistoryAndEvents
   , null, true, 'America/Los_Angeles');
 console.log("cron job");
 job.start();
@@ -259,7 +257,7 @@ app.post('/api/search', (req, res) => {
   //console.log("timezone in index.js:", timezone);
 
   function ondateEvents(story) {
-   // console.log("timezone in index.js:", moment(story.startdatetime).tz(timezone).format('DD'));
+    // console.log("timezone in index.js:", moment(story.startdatetime).tz(timezone).format('DD'));
     //console.log("timezone in index.js:", moment(story.startdatetime).tz(timezone).format());
 
     return (
@@ -267,7 +265,7 @@ app.post('/api/search', (req, res) => {
       (moment(story.startdatetime).tz(timezone).format('DD') === moment(dates).tz(timezone).format('DD')));
   }
 
-  
+
 
   if (selectedOptionTags != null && selectedOptionTags.length != 0) {
     const findtags = selectedOptionTags.map((item) => (item.value))
@@ -276,9 +274,9 @@ app.post('/api/search', (req, res) => {
 
       console.log("another finf :", event);
       let fil = [];
-      if(dates != null)
-         fil = event.filter(ondateEvents);
-      else 
+      if (dates != null)
+        fil = event.filter(ondateEvents);
+      else
         fil = [].concat(event);
       const filt1 = fil.filter(currentevents);
       res.send(filt1);
@@ -296,10 +294,10 @@ app.post('/api/search', (req, res) => {
       console.log("another f :", req.body);
 
       let currEvents = [];
-      if(dates != null)
+      if (dates != null)
         currEvents = event.filter(ondateEvents);
-      else 
-      currEvents = [].concat(event);
+      else
+        currEvents = [].concat(event);
       const filt2 = currEvents.filter(currentevents);
       let sortedEvents = [];
       if (req.body.selectedOptionSortBy.value == 58) {
@@ -322,12 +320,34 @@ app.post('/api/search', (req, res) => {
 
 app.get('/api/tags', (req, res) => {
 
-  Event.find().distinct('tags', function (error, tagTitles) {
-    console.log("all tagtitles :", tagTitles);
-    const tagTitlesFilter = tagTitles.filter((item) => { return item != null })
-    //const fil = tagTitlesFilter.filter(currentevents);
-    console.log("all upcoming tagtitles :", tagTitlesFilter);
-    res.send(tagTitlesFilter);
+  Event.find({}, function (error, tagTitles) {
+    if (error) {
+      console.log(error);
+      return;
+    }
+
+    //console.log("all tagtitles :", tagTitles);
+    //const tagTitlesFilter = tagTitles.filter((item) => { return item != null })
+    const fil = tagTitles.filter(currentevents);
+    //console.log("all upcoming tagtitles :", fil);
+    /*get the distinct tagtitles*/
+    let distincttags = new Set();
+    fil.forEach(myFunction);
+
+
+    function myFunction(item, index) {
+
+      item.tags.forEach(func);
+      function func(item) {
+        distincttags.add(item);
+      }
+
+
+    }
+    console.log("distinct tags", distincttags);
+    let finalTags = [...distincttags];
+    console.log("final tags", finalTags);
+    res.send(finalTags);
     //respond with the results array
     // res.json(results);
   });
